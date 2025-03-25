@@ -20,3 +20,8 @@ Route::get('/contact', function () {
 Route::get('/create-cv', function () {
     return view('create-cv');
 });
+
+
+Route::get('/register', function () {
+    return view('register');
+});
