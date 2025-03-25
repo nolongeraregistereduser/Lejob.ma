@@ -15,3 +15,8 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+
+Route::get('/create-cv', function () {
+    return view('create-cv');
+});
