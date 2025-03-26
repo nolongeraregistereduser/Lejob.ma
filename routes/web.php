@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,10 +24,10 @@ Route::get('/create-cv', function () {
 });
 
 
-Route::get('/register', function () {
-    return view('register');
-});
 
-Route::get('/login', function () {
-    return view('login');
-});
+
+Route::get('/register', [AuthController::class, 'showRegister']);
+Route::get('/login', [AuthController::class, 'showLogin']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
