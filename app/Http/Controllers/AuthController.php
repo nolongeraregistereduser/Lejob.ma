@@ -31,9 +31,14 @@ class AuthController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+
+        dd($user);
+        
         $user->password = bcrypt($request->password);
         $user->role = $request->role;
         $user->save();
+
+        
 
         return redirect()->route('login')->with('success', 'Registration successful. Please log in.');
     }

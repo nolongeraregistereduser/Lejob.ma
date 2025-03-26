@@ -37,24 +37,30 @@
             <div class="bg-white p-6 sm:p-8 rounded-xl">
                 <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Inscription</h2>
                 
-                <form class="space-y-4 sm:space-y-6">
+                <form class="space-y-4 sm:space-y-6" method="POST" action="{{ route('register') }}">
+                    @csrf
                     <div>
                         <input type="text" 
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
+                            name="name"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent @error('name') border-red-500 @enderror"
                             placeholder="Nom complet *"
+                            value="{{ old('name') }}"
                             required>
                     </div>
 
                     <div>
                         <input type="email" 
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
+                            name="email"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent @error('email') border-red-500 @enderror"
                             placeholder="Adresse e-mail *"
+                            value="{{ old('email') }}"
                             required>
                     </div>
 
                     <div>
                         <input type="password" 
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
+                            name="password"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent @error('password') border-red-500 @enderror"
                             placeholder="Mot de passe *"
                             required
                             minlength="8">
@@ -62,6 +68,7 @@
 
                     <div>
                         <input type="password" 
+                            name="password_confirmation"
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
                             placeholder="Confirmez le mot de passe *"
                             required>
@@ -69,19 +76,32 @@
 
                     <div>
                         <input type="tel" 
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
+                            name="phone"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent @error('phone') border-red-500 @enderror"
                             placeholder="Numéro de téléphone (facultatif)"
+                            value="{{ old('phone') }}"
                             pattern="[0-9]{10}">
                     </div>
 
                     <div>
-                        <select class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
+                        <select name="role" 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent @error('role') border-red-500 @enderror"
                             required>
                             <option value="" disabled selected>Choisissez votre rôle *</option>
-                            <option value="job_seeker">Chercheur d'emploi</option>
-                            <option value="consultant">Consultant</option>
+                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Chercheur d'emploi</option>
+                            <option value="consultant" {{ old('role') == 'consultant' ? 'selected' : '' }}>Consultant</option>
                         </select>
                     </div>
+
+                    @if ($errors->any())
+                        <div class="bg-red-50 text-red-500 p-4 rounded-lg">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <button type="submit" 
                         class="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors">
