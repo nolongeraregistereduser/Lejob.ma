@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->enum('role', ['user', 'admin','consultant'])->default('user');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('role', ['user', 'admin','consultant']);
+            $table->enum('status', ['active', 'inactive']);
 
             // mazal anzid columns mni an7tajhom, for the moment i will implement only authentication
             

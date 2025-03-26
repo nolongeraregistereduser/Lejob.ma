@@ -28,6 +28,6 @@ Route::get('/create-cv', function () {
 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::get('/login', [AuthController::class, 'showLogin']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
