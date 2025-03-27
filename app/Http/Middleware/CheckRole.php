@@ -14,21 +14,18 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        // Debug information
+        // Enhanced debug information
         Log::info('CheckRole middleware called', [
             'user' => $request->user() ? $request->user()->id : 'not authenticated',
             'required_roles' => $roles,
-            'user_role' => $request->user() ? $request->user()->role : 'none'
+            'user_role' => $request->user() ? $request->user()->role : 'none',
+            'path' => $request->path(),
+            'method' => $request->method()
         ]);
 
         // Check if the user is authenticated
         if (!$request->user()) {
             return redirect()->route('login');
-        }
-
-        // If no specific roles are required or user is admin, proceed
-        if (empty($roles) || $request->user()->role === 'admin') {
-            return $next($request);
         }
 
         // Check if user has one of the required roles
