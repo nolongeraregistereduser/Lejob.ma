@@ -63,7 +63,16 @@ class AuthController extends Controller
             // security feature to prevent session fixation attacks
             // best practice to regenerate the session ID after a successful login
             $request->session()->regenerate();
-            return redirect('/dashboard');
+            
+            // Redirect based on user role
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect('/admin/dashboard');
+            } elseif ($user->role === 'consultant') {
+                return redirect('/consultant/dashboard');
+            } else {
+                return redirect('/dashboard');
+            }
         }
 
         return back()->withErrors([

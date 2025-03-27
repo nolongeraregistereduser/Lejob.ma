@@ -21,7 +21,7 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected routes for all authenticated users
 Route::middleware(['auth'])->group(function () {
