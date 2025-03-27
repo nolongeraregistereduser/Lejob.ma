@@ -24,40 +24,57 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected routes for all authenticated users
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'role:user'])->name('dashboard');
 
-// Job seeker routes
-Route::middleware(['auth', 'check.role:user'])->group(function () {
-    Route::get('/create-cv', function () {
-        return view('create-cv');
-    });
-    Route::get('/job-applications', function () {
-        return view('job-applications');
-    });
-});
+// Routes for job seekers (users)
+Route::get('/user/dashboard', function () {
+    return view('user.dashboard');
+})->middleware(['auth', 'role:user'])->name('user.dashboard');
 
-// Consultant routes
-Route::middleware(['auth', 'check.role:consultant'])->group(function () {
-    Route::get('/consultant/dashboard', function () {
-        return view('consultant.dashboard');
-    });
-});
+Route::get('/cv/create', function () {
+    return view('cv.create');
+})->middleware(['auth', 'role:user'])->name('cv.create');
 
-// Admin routes
-Route::middleware(['auth', 'check.role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    });
-    Route::get('/admin/users', function () {
-        return view('admin.users');
-    });
-});
+Route::get('/jobs', function () {
+    return view('jobs.index');
+})->middleware(['auth', 'role:user'])->name('jobs.index');
 
+
+
+
+// Routes for consultants
+Route::get('/consultant/dashboard', function () {
+    return view('consultant.dashboard');
+})->middleware(['auth', 'role:consultant'])->name('consultant.dashboard');
+
+Route::get('/consultant/bookings', function () {
+    return view('consultant.bookings');
+})->middleware(['auth', 'role:consultant'])->name('consultant.bookings');
+
+Route::get('/consultant/availability', function () {
+    return view('consultant.availability');
+})->middleware(['auth', 'role:consultant'])->name('consultant.availability');
+
+Route::get('/consultant/profile', function () {
+    return view('consultant.profile');
+})->middleware(['auth', 'role:consultant'])->name('consultant.profile');
+
+// Routes for admins
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->middleware(['auth', 'role:admin'])->name('admin.dashboard');
+
+Route::get('/admin/users', function () {
+    return view('admin.users.index');
+})->middleware(['auth', 'role:admin'])->name('admin.users');
+
+Route::get('/admin/jobs', function () {
+    return view('admin.jobs.index');
+})->middleware(['auth', 'role:admin'])->name('admin.jobs');
+
+// Test route
+Route::get('/test-middleware', function () {
+    return 'Middleware is working!';
+})->middleware(['auth', 'role:admin']);
