@@ -37,16 +37,36 @@
             <div class="bg-white p-6 sm:p-8 rounded-xl">
                 <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Connexion</h2>
                 
-                <form class="space-y-4 sm:space-y-6">
+                @if ($errors->any())
+                    <div class="mb-4 p-4 rounded-lg bg-red-50 border border-red-500">
+                        <ul class="list-disc list-inside text-red-600">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if (session('success'))
+                    <div class="mb-4 p-4 rounded-lg bg-green-50 border border-green-500">
+                        <p class="text-green-600">{{ session('success') }}</p>
+                    </div>
+                @endif
+                
+                <form class="space-y-4 sm:space-y-6" method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div>
                         <input type="email" 
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
+                            name="email"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent @error('email') border-red-500 @enderror"
                             placeholder="Adresse e-mail"
+                            value="{{ old('email') }}"
                             required>
                     </div>
 
                     <div>
                         <input type="password" 
+                            name="password"
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-black focus:border-transparent"
                             placeholder="Mot de passe"
                             required>
@@ -54,7 +74,7 @@
 
                     <div class="flex items-center justify-between">
                         <label class="flex items-center">
-                            <input type="checkbox" class="rounded border-gray-300 text-black focus:ring-black">
+                            <input type="checkbox" name="remember" class="rounded border-gray-300 text-black focus:ring-black">
                             <span class="ml-2 text-sm">Se souvenir de moi</span>
                         </label>
                         <a href="/forgot-password" class="text-sm text-black hover:underline">
@@ -69,7 +89,7 @@
 
                     <p class="text-sm text-center">
                         Pas encore de compte ? 
-                        <a href="/register" class="text-black hover:underline">Inscrivez-vous</a>
+                        <a href="{{ route('register') }}" class="text-black hover:underline">Inscrivez-vous</a>
                     </p>
                 </form>
             </div>

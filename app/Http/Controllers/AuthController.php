@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -40,9 +40,43 @@ class AuthController extends Controller
         if($request->role == 'consultant'){
             $user->status = 'pending';}
 
-        dd($user);
+        // Remove the dd() to allow registration to complete
+        // dd($user);
         $user->save();
 
         return redirect()->route('login')->with('success', 'Registration successful. Please log in.');
     }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // dd($credentials);
+
+        /* - The second parameter ( $request->has('remember') ) determines if the "remember me" functionality should be used
+- It returns true if authentication succeeds, false otherwise */
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            // security feature to prevent session fixation attacks
+            // best practice to regenerate the session ID after a successful login
+            $request->session()->regenerate();
+            return redirect('/dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'Les informations de connexion sont incorrectes.',
+        ])->withInput($request->only('email'));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
 }
+
