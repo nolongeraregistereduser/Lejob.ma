@@ -72,15 +72,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Add this route for users management
     Route::get('/admin/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.users');
 
-    route::get('/admin/user-management', function () {
-        return view('admin.user-management.index');
-    })->name('admin.user-management');
-
-    Route::get('/admin/jobs', function () {
-        return view('admin.jobs.index');
-    })->name('admin.jobs');
+    Route::get('/admin/jobs', [App\Http\Controllers\admin\JobsController::class, 'index'])->name('admin.jobs');
     
     Route::get('/admin/interviews', [App\Http\Controllers\admin\InterviewsController::class, 'index'])->name('admin.interviews');
+
+    Route::get('/admin/statistics', [App\Http\Controllers\admin\StatisticsController::class, 'index'])->name('admin.statistics');
+
 });
 
 
