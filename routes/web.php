@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\InterviewsController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,10 +63,14 @@ Route::get('/consultant/profile', function () {
 })->middleware(['auth', 'role:consultant'])->name('consultant.profile');
 
 // Routes for admins
+// Inside your admin routes group
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // Add this route for users management
+    Route::get('/admin/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.users');
 
     route::get('/admin/user-management', function () {
         return view('admin.user-management.index');
@@ -74,9 +79,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/jobs', function () {
         return view('admin.jobs.index');
     })->name('admin.jobs');
-
-
+    
+    Route::get('/admin/interviews', [App\Http\Controllers\admin\InterviewsController::class, 'index'])->name('admin.interviews');
 });
+
 
 // Test route
 Route::get('/test-middleware', function () {
