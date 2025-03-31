@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserManagementController extends Controller
 {
     public function index()
     {
-        // Return the users view for the /admin/users route
-        return view('admin.users.index');
+  
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
+
 }

@@ -70,7 +70,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('admin.dashboard');
 
     // Add this route for users management
-    Route::get('/admin/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.users');
+    Route::get('/admin/users', [App\Http\Controllers\admin\UserManagementController::class, 'index'])->name('admin.users');
 
     Route::get('/admin/jobs', [App\Http\Controllers\admin\JobsController::class, 'index'])->name('admin.jobs');
     
