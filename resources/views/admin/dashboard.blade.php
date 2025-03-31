@@ -1,41 +1,294 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Dashboard - LeJob.ma</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Crafty+Girls&display=swap" rel="stylesheet">
-    
-    @vite('resources/css/app.css')
-</head>
-<body class="font-[Quicksand] bg-gray-50">
-    @include('components.navbar')
+@extends('layouts.admin')
 
-    <main class="container mx-auto px-4 py-8">
-        <div class="bg-white rounded-xl shadow-sm p-6">
-            <h1 class="text-2xl font-bold mb-6">Admin Dashboard</h1>
-            
-            <div class="mb-6">
-                <h2 class="text-xl font-semibold mb-3">Welcome, {{ Auth::user()->name }}!</h2>
-                <p class="text-gray-600">You are logged in as an administrator.</p>
+@section('content')
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <div class="bg-indigo-600 rounded-lg p-6 text-white">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-semibold mb-1">Interviews Schedule</h3>
+                <p class="text-4xl font-bold">86</p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <a href="{{ route('admin.users') }}" class="bg-blue-50 p-4 rounded-lg hover:bg-blue-100">
-                    <h3 class="font-semibold">User Management</h3>
-                </a>
+            <div class="bg-indigo-500 p-3 rounded-lg">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
             </div>
-            
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
-                    Logout
-                </button>
-            </form>
         </div>
-    </main>
+    </div>
 
-    @include('components.footer')
-</body>
-</html>
+    <div class="bg-blue-500 rounded-lg p-6 text-white">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-semibold mb-1">Application Sent</h3>
+                <p class="text-4xl font-bold">75</p>
+            </div>
+            <div class="bg-blue-400 p-3 rounded-lg">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-green-500 rounded-lg p-6 text-white">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-semibold mb-1">Profile Viewed</h3>
+                <p class="text-4xl font-bold">45,673</p>
+            </div>
+            <div class="bg-green-400 p-3 rounded-lg">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-purple-500 rounded-lg p-6 text-white">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-semibold mb-1">Unread Message</h3>
+                <p class="text-4xl font-bold">93</p>
+            </div>
+            <div class="bg-purple-400 p-3 rounded-lg">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold">Vacancy Stats</h2>
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center">
+                <div class="w-3 h-3 bg-indigo-500 rounded-full mr-2"></div>
+                <span>Application Sent</span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                <span>Interviews</span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-3 h-3 bg-gray-300 rounded-full mr-2"></div>
+                <span>Rejected</span>
+            </div>
+        </div>
+    </div>
+    <div class="h-64 w-full">
+        <canvas id="vacancyChart"></canvas>
+    </div>
+</div>
+
+<!-- Recent Activities & Recommended Jobs -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Recent Activities -->
+    <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h2 class="text-xl font-semibold mb-4">Recent Activities</h2>
+        <div class="space-y-4">
+            <div class="flex items-start">
+                <div class="bg-indigo-100 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
+                    <p class="text-xs text-gray-500">12h ago</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="bg-indigo-100 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
+                    <p class="text-xs text-gray-500">12h ago</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="bg-indigo-100 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
+                    <p class="text-xs text-gray-500">12h ago</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="bg-indigo-100 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
+                    <p class="text-xs text-gray-500">12h ago</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommended Jobs -->
+    <div class="lg:col-span-2 bg-white rounded-lg p-6 shadow-sm">
+        <h2 class="text-xl font-semibold mb-4">Recommended Jobs</h2>
+        <div class="space-y-4">
+            <div class="border rounded-lg p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <div>
+                        <h3 class="font-semibold">Database Programmer</h3>
+                        <p class="text-sm text-gray-600">Maximuz Team</p>
+                    </div>
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">REMOTE</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">$14,000 - $25,000</p>
+                <p class="text-sm text-gray-500">London, England</p>
+            </div>
+            <div class="border rounded-lg p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <div>
+                        <h3 class="font-semibold">Senior Programmer</h3>
+                        <p class="text-sm text-gray-600">Klean n Clin Studios</p>
+                    </div>
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">PART TIME</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">$14,000 - $25,000</p>
+                <p class="text-sm text-gray-500">Manchester, England</p>
+            </div>
+            <div class="border rounded-lg p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <div>
+                        <h3 class="font-semibold">Intern UX Designer</h3>
+                        <p class="text-sm text-gray-600">Maximuz Team</p>
+                    </div>
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">FULLTIME</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">$14,000 - $25,000</p>
+                <p class="text-sm text-gray-500">London, England</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Companies Section -->
+<div class="mt-6">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold">Featured Companies</h2>
+        <a href="#" class="text-indigo-600 hover:underline flex items-center">
+            View More
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
+            <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
+            <h3 class="font-semibold">Herman-Carter</h3>
+            <p class="text-sm text-gray-500">21 Vacancy</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
+            <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
+            <h3 class="font-semibold">Funk Inc.</h3>
+            <p class="text-sm text-gray-500">21 Vacancy</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
+            <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
+            <h3 class="font-semibold">Williamson Inc</h3>
+            <p class="text-sm text-gray-500">21 Vacancy</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
+            <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
+            <h3 class="font-semibold">Donnelly Ltd.</h3>
+            <p class="text-sm text-gray-500">21 Vacancy</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
+            <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
+            <h3 class="font-semibold">Herman-Carter</h3>
+            <p class="text-sm text-gray-500">21 Vacancy</p>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('vacancyChart').getContext('2d');
+        
+        // Sample data
+        const labels = ['Week 01', 'Week 02', 'Week 03', 'Week 04', 'Week 05', 'Week 06', 'Week 07', 'Week 08', 'Week 09', 'Week 10'];
+        const applicationData = [20, 40, 30, 70, 50, 60, 30, 20, 40, 50];
+        const interviewData = [10, 20, 15, 30, 25, 40, 35, 25, 30, 20];
+        const rejectedData = [5, 10, 8, 15, 12, 20, 18, 12, 15, 10];
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Application Sent',
+                        data: applicationData,
+                        borderColor: '#6366F1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#6366F1'
+                    },
+                    {
+                        label: 'Interviews',
+                        data: interviewData,
+                        borderColor: '#10B981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#10B981'
+                    },
+                    {
+                        label: 'Rejected',
+                        data: rejectedData,
+                        borderColor: '#D1D5DB',
+                        backgroundColor: 'rgba(209, 213, 219, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#D1D5DB'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+@endpush

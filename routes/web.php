@@ -62,19 +62,25 @@ Route::get('/consultant/profile', function () {
 })->middleware(['auth', 'role:consultant'])->name('consultant.profile');
 
 // Routes for admins
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'role:admin'])->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
 
-Route::get('/admin/users', function () {
-    return view('admin.users.index');
-})->middleware(['auth', 'role:admin'])->name('admin.users');
+    Route::get('/admin/users', function () {
+        return view('admin.users.index');
+    })->name('admin.users');
 
-Route::get('/admin/jobs', function () {
-    return view('admin.jobs.index');
-})->middleware(['auth', 'role:admin'])->name('admin.jobs');
+    Route::get('/admin/jobs', function () {
+        return view('admin.jobs.index');
+    })->name('admin.jobs');
+
+    
+});
 
 // Test route
 Route::get('/test-middleware', function () {
     return 'Middleware is working!';
 })->middleware(['auth', 'role:admin']);
+
+
