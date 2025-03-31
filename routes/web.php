@@ -67,15 +67,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    Route::get('/admin/users', function () {
-        return view('admin.users.index');
-    })->name('admin.users');
+    route::get('/admin/user-management', function () {
+        return view('admin.user-management.index');
+    })->name('admin.user-management');
 
     Route::get('/admin/jobs', function () {
         return view('admin.jobs.index');
     })->name('admin.jobs');
 
-    
+
 });
 
 // Test route
