@@ -70,15 +70,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     })->name('admin.dashboard');
 
     // Add this route for users management
-    Route::get('/admin/users', [App\Http\Controllers\admin\UserManagementController::class, 'index'])->name('admin.users');
+    Route::get('/admin/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.users');
+    Route::post('/admin/users/{id}/approve', [App\Http\Controllers\Admin\UserManagementController::class, 'approve'])->name('admin.users.approve');
+    Route::post('/admin/users/{id}/reject', [App\Http\Controllers\Admin\UserManagementController::class, 'reject'])->name('admin.users.reject');
+    Route::post('/admin/users/{id}/activate', [App\Http\Controllers\Admin\UserManagementController::class, 'activate'])->name('admin.users.activate');
+    Route::delete('/admin/users/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'delete'])->name('admin.users.delete');
+
 
     Route::get('/admin/jobs', [App\Http\Controllers\admin\JobsController::class, 'index'])->name('admin.jobs');
     
     Route::get('/admin/interviews', [App\Http\Controllers\admin\InterviewsController::class, 'index'])->name('admin.interviews');
 
     Route::get('/admin/statistics', [App\Http\Controllers\admin\StatisticsController::class, 'index'])->name('admin.statistics');
-
 });
+    
 
 
 // Test route
