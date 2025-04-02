@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\ConsultantApproved;
 use Illuminate\Http\Request;
 
 class UserManagementController extends Controller
@@ -16,14 +17,16 @@ class UserManagementController extends Controller
     }
 
     // approuver les consultants
-     public function approve(Request $request){
-        $user = User::find(request()->id);
-        $user->status = 'active';
-        $user->role = 'consultant';
-        $user->save();
-        
-        return redirect()->back()->with('success', 'Consultant approved successfully');
-     }
+    public function approve(Request $request){
+      $user = User::find(request()->id);
+      $user->status = 'active';
+      $user->save();
+      
+      // Send notification to the consultant
+      $user->notify(new ConsultantApproved());
+      
+      return redirect()->back()->with('success', 'Consultant approuvé avec succès. Un e-mail de notification a été envoyé.');
+   }
 
      // rejecting consultant
      public function reject(Request $request){

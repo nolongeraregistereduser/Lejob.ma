@@ -3,6 +3,8 @@
 use App\Http\Controllers\admin\InterviewsController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 
 // Public routes
 Route::get('/', function () {
@@ -90,5 +92,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::get('/test-middleware', function () {
     return 'Middleware is working!';
 })->middleware(['auth', 'role:admin']);
+
+Route::get('/test-email', function () {
+    try {
+        $to = "itsmezouhairi@gmail.com"; // Change this to your email
+        
+        Mail::raw('This is a test email to verify SMTP configuration is working.', function ($message) use ($to) {
+            $message->to($to)
+                ->subject('SMTP Test Email from LeJob.ma');
+        });
+        
+        return "Test email sent successfully! Please check your inbox.";
+    } catch (\Exception $e) {
+        return "Error sending email: " . $e->getMessage();
+    }
+});
 
 
