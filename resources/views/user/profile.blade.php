@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Profile')
-@section('page-title', 'Edit Profile')
+@section('title', 'Modifier le Profil')
+@section('page-title', 'Modifier le Profil')
 
 @section('content')
 <div class="bg-white rounded-lg shadow-sm p-6">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-bold">Edit Profile</h2>
+        <h2 class="text-xl font-bold">Modifier le Profil</h2>
         <div class="flex space-x-2">
             <div class="flex items-center">
-                <span class="mr-2 text-sm text-gray-600 font-medium">Available for hire?</span>
+                <span class="mr-2 text-sm text-gray-600 font-medium">Disponible pour embauche?</span>
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" name="available_for_hire" class="sr-only peer" {{ $user->available_for_hire ?? false ? 'checked' : '' }}>
                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                 </label>
             </div>
-            <button type="button" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">Cancel</button>
-            <button type="submit" form="profile-form" class="px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors">Save Changes</button>
+            <button type="button" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">Annuler</button>
+            <button type="submit" form="profile-form" class="px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors">Enregistrer</button>
         </div>
     </div>
 
@@ -29,43 +29,37 @@
             <div class="lg:col-span-3">
                 <!-- GENERALS Section -->
                 <div class="mb-8 bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-sm font-bold uppercase text-gray-700 mb-6 tracking-wider">GENERALS</h3>
+                    <h3 class="text-sm font-bold uppercase text-gray-700 mb-6 tracking-wider">INFORMATIONS GÉNÉRALES</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
+                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1.5">Prénom</label>
                             <input type="text" id="first_name" name="first_name" value="{{ old('first_name', $user->first_name ?? $user->name ?? '') }}" 
-                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800">
+                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="Mohammed">
                         </div>
                         
                         <div>
-                            <label for="middle_name" class="block text-sm font-medium text-gray-700 mb-1.5">Middle Name</label>
-                            <input type="text" id="middle_name" name="middle_name" value="{{ old('middle_name', $user->middle_name ?? '') }}" 
-                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="Type here">
-                        </div>
-                        
-                        <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1.5">Nom de Famille</label>
                             <input type="text" id="last_name" name="last_name" value="{{ old('last_name', $user->last_name ?? '') }}" 
-                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800">
+                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="El Alaoui">
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1.5">Username</label>
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1.5">Nom d'utilisateur</label>
                             <input type="text" id="username" name="username" value="{{ old('username', $user->username ?? '') }}" 
-                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800">
+                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="mohammed.alaoui">
                         </div>
                         
                         <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Mot de passe</label>
                             <input type="password" id="password" name="password" 
                                 class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="**************">
                         </div>
                         
                         <div>
-                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1.5">Re-Type Password</label>
+                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1.5">Confirmer le mot de passe</label>
                             <input type="password" id="password_confirmation" name="password_confirmation" 
                                 class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="**************">
                         </div>
@@ -78,7 +72,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1.5">Mobile/Phone</label>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1.5">Téléphone Mobile</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -86,7 +80,7 @@
                                     </svg>
                                 </div>
                                 <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone ?? '') }}" 
-                                    class="w-full h-12 border-2 border-gray-200 rounded-full pl-10 pr-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="+50 123 456 78">
+                                    class="w-full h-12 border-2 border-gray-200 rounded-full pl-10 pr-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="+212 6 61 23 45 67">
                             </div>
                         </div>
                         
@@ -100,7 +94,7 @@
                                     </svg>
                                 </div>
                                 <input type="text" id="whatsapp" name="whatsapp" value="{{ old('whatsapp', $user->whatsapp ?? '') }}" 
-                                    class="w-full h-12 border-2 border-gray-200 rounded-full pl-10 pr-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="+50 444 5511 11">
+                                    class="w-full h-12 border-2 border-gray-200 rounded-full pl-10 pr-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="+212 6 61 23 45 67">
                             </div>
                         </div>
                         
@@ -114,23 +108,23 @@
                                     </svg>
                                 </div>
                                 <input type="email" id="email" name="email" value="{{ old('email', $user->email ?? '') }}" 
-                                    class="w-full h-12 border-2 border-gray-200 rounded-full pl-10 pr-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="davidheree@gmail.com">
+                                    class="w-full h-12 border-2 border-gray-200 rounded-full pl-10 pr-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="mohammed.alaoui@gmail.com">
                             </div>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label for="address" class="block text-sm font-medium text-gray-700 mb-1.5">Address</label>
+                            <label for="address" class="block text-sm font-medium text-gray-700 mb-1.5">Adresse</label>
                             <input type="text" id="address" name="address" value="{{ old('address', $user->address ?? '') }}" 
-                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="Franklin Avenue St. Corner">
+                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="Résidence Al Wafa, Apt 5, Rue Hassan II">
                         </div>
                         
                         <div>
-                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1.5">City</label>
+                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1.5">Ville</label>
                             <div class="relative">
                                 <input type="text" id="city" name="city" value="{{ old('city', $user->city ?? '') }}" 
-                                    class="w-full h-12 border-2 border-gray-200 rounded-full px-4 pr-10 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="London">
+                                    class="w-full h-12 border-2 border-gray-200 rounded-full px-4 pr-10 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="Casablanca">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -140,10 +134,10 @@
                         </div>
                         
                         <div>
-                            <label for="country" class="block text-sm font-medium text-gray-700 mb-1.5">Country</label>
+                            <label for="country" class="block text-sm font-medium text-gray-700 mb-1.5">Pays</label>
                             <div class="relative">
                                 <input type="text" id="country" name="country" value="{{ old('country', $user->country ?? '') }}" 
-                                    class="w-full h-12 border-2 border-gray-200 rounded-full px-4 pr-10 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="England">
+                                    class="w-full h-12 border-2 border-gray-200 rounded-full px-4 pr-10 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="Maroc">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -156,28 +150,28 @@
                 
                 <!-- ABOUT ME Section -->
                 <div class="mb-8 bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-sm font-bold uppercase text-gray-700 mb-6 tracking-wider">ABOUT ME</h3>
+                    <h3 class="text-sm font-bold uppercase text-gray-700 mb-6 tracking-wider">À PROPOS DE MOI</h3>
                     
                     <div>
-                        <label for="bio" class="block text-sm font-medium text-gray-700 mb-1.5">Tell About You</label>
+                        <label for="bio" class="block text-sm font-medium text-gray-700 mb-1.5">Parlez de vous</label>
                         <textarea id="bio" name="bio" rows="6" 
-                            class="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800 resize-none">{{ old('bio', $user->bio ?? '') }}</textarea>
+                            class="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800 resize-none" placeholder="Décrivez votre parcours professionnel, vos compétences et vos objectifs...">{{ old('bio', $user->bio ?? '') }}</textarea>
                     </div>
                 </div>
                 
                 <!-- SKILLS Section -->
                 <div class="bg-gray-50 p-6 rounded-lg">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-sm font-bold uppercase text-gray-700 tracking-wider">SKILLS</h3>
+                        <h3 class="text-sm font-bold uppercase text-gray-700 tracking-wider">COMPÉTENCES</h3>
                         <button type="button" class="text-purple-600 text-sm font-medium flex items-center hover:text-purple-700 transition-colors">
-                            <span class="mr-1">+</span> Add New Skills
+                            <span class="mr-1">+</span> Ajouter de nouvelles compétences
                         </button>
                     </div>
                     
                     <div class="space-y-6">
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="text-sm font-medium">Programming</span>
+                                <span class="text-sm font-medium">Programmation</span>
                                 <span class="text-sm font-semibold">78%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
@@ -187,7 +181,7 @@
                         
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="text-sm font-medium">Prototyping</span>
+                                <span class="text-sm font-medium">Prototypage</span>
                                 <span class="text-sm font-semibold">65%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
@@ -254,19 +248,19 @@
                             </label>
                         </div>
                         
-                        <h3 class="text-lg font-semibold text-center">{{ $user->name ?? 'Oda Dink' }}</h3>
-                        <p class="text-gray-500 text-center">{{ $user->title ?? 'Programmer' }}</p>
+                        <h3 class="text-lg font-semibold text-center">{{ $user->name ?? 'Mohammed El Alaoui' }}</h3>
+                        <p class="text-gray-500 text-center">{{ $user->title ?? 'Développeur Web' }}</p>
                     </div>
                     
                     <!-- Followers section with border -->
                     <div class="grid grid-cols-2 w-full border-t border-b border-gray-100">
                         <div class="text-center py-4 px-2">
                             <p class="font-bold text-lg">228</p>
-                            <p class="text-sm text-gray-500">Following</p>
+                            <p class="text-sm text-gray-500">Abonnements</p>
                         </div>
                         <div class="text-center py-4 px-2 border-l border-gray-100">
                             <p class="font-bold text-lg">4,842</p>
-                            <p class="text-sm text-gray-500">Followers</p>
+                            <p class="text-sm text-gray-500">Abonnés</p>
                         </div>
                     </div>
                     
@@ -278,7 +272,7 @@
                                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                                 </svg>
                             </div>
-                            <span>{{ $user->phone ?? '+50 123 456 78' }}</span>
+                            <span>{{ $user->phone ?? '+212 6 61 23 45 67' }}</span>
                         </div>
                         <div class="flex items-center">
                             <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
@@ -287,7 +281,7 @@
                                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                 </svg>
                             </div>
-                            <span>{{ $user->email ?? 'davidheree@gmail.com' }}</span>
+                            <span>{{ $user->email ?? 'mohammed.alaoui@gmail.com' }}</span>
                         </div>
                     </div>
                     
@@ -334,32 +328,32 @@
                     </div>
                     
                     <div class="space-y-3">
-                        <a href="/davidheree.porto" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                        <a href="/mohammed.portfolio" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
                             <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
                                 <span class="text-white font-bold">f</span>
                             </div>
-                            <span>/davidheree.porto</span>
+                            <span>/mohammed.portfolio</span>
                         </a>
                         
-                        <a href="/david.drib" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                        <a href="/mohammed.drib" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
                             <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center mr-3">
                                 <span class="text-white font-bold">d</span>
                             </div>
-                            <span>/david.drib</span>
+                            <span>/mohammed.drib</span>
                         </a>
                         
-                        <a href="/davidheree222" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                        <a href="/mohammed.in" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
                             <div class="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center mr-3">
                                 <span class="text-white font-bold">in</span>
                             </div>
-                            <span>/davidheree222</span>
+                            <span>/mohammed.in</span>
                         </a>
                         
-                        <a href="/davidhereechan" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                        <a href="/mohammedalaoui" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
                             <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center mr-3">
                                 <span class="text-white font-bold">yt</span>
                             </div>
-                            <span>/davidhereechan</span>
+                            <span>/mohammedalaoui</span>
                         </a>
                     </div>
                 </div>
@@ -367,21 +361,4 @@
         </div>
     </form>
 </div>
-
-@push('scripts')
-<script>
-    function togglePassword(inputId) {
-        const input = document.getElementById(inputId);
-        const button = input.nextElementSibling;
-        
-        if (input.type === 'password') {
-            input.type = 'text';
-            button.textContent = 'HIDE';
-        } else {
-            input.type = 'password';
-            button.textContent = 'SHOW';
-        }
-    }
-</script>
-@endpush
 @endsection
