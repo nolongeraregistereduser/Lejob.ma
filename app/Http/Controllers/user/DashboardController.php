@@ -48,6 +48,6 @@ class DashboardController extends Controller
         
         $user->save();
         
-        return redirect()->route('profile')->with('success', 'Profile updated successfully');
+        return redirect()->route('profile')->with('success', 'Profile mis a jour avec succès.');
     }
 }
