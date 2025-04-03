@@ -136,8 +136,8 @@
                 </div>
             </div>
         </div>
-    </div>
-
+            </div>
+            
     <!-- Emplois Recommandés -->
     <div class="lg:col-span-2 bg-white rounded-lg p-6 shadow-sm">
         <h2 class="text-xl font-semibold mb-4">Emplois Recommandés</h2>
@@ -177,8 +177,8 @@
             </div>
         </div>
     </div>
-</div>
-
+            </div>
+            
 <!-- Section des Entreprises en Vedette -->
 <div class="mt-6">
     <div class="flex items-center justify-between mb-4">
