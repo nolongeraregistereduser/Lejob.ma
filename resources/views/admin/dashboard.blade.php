@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-<!-- Stats Cards -->
+<!-- Cartes de statistiques -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
     <div class="bg-indigo-600 rounded-lg p-6 text-white">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-lg font-semibold mb-1">Interviews Schedule</h3>
+                <h3 class="text-lg font-semibold mb-1">Planning des Entretiens</h3>
                 <p class="text-4xl font-bold">86</p>
             </div>
             <div class="bg-indigo-500 p-3 rounded-lg">
@@ -20,7 +20,7 @@
     <div class="bg-blue-500 rounded-lg p-6 text-white">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-lg font-semibold mb-1">Application Sent</h3>
+                <h3 class="text-lg font-semibold mb-1">Candidatures Envoyées</h3>
                 <p class="text-4xl font-bold">75</p>
             </div>
             <div class="bg-blue-400 p-3 rounded-lg">
@@ -34,7 +34,7 @@
     <div class="bg-green-500 rounded-lg p-6 text-white">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-lg font-semibold mb-1">Profile Viewed</h3>
+                <h3 class="text-lg font-semibold mb-1">Profil Consulté</h3>
                 <p class="text-4xl font-bold">45,673</p>
             </div>
             <div class="bg-green-400 p-3 rounded-lg">
@@ -49,7 +49,7 @@
     <div class="bg-purple-500 rounded-lg p-6 text-white">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-lg font-semibold mb-1">Unread Message</h3>
+                <h3 class="text-lg font-semibold mb-1">Messages Non Lus</h3>
                 <p class="text-4xl font-bold">93</p>
             </div>
             <div class="bg-purple-400 p-3 rounded-lg">
@@ -61,22 +61,22 @@
     </div>
 </div>
 
-<!-- Charts Section -->
+<!-- Section des Graphiques -->
 <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
     <div class="flex items-center justify-between mb-4">
-        <h2 class="text-xl font-semibold">Vacancy Stats</h2>
+        <h2 class="text-xl font-semibold">Statistiques des Offres</h2>
         <div class="flex items-center space-x-4">
             <div class="flex items-center">
                 <div class="w-3 h-3 bg-indigo-500 rounded-full mr-2"></div>
-                <span>Application Sent</span>
+                <span>Candidatures Envoyées</span>
             </div>
             <div class="flex items-center">
                 <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                <span>Interviews</span>
+                <span>Entretiens</span>
             </div>
             <div class="flex items-center">
                 <div class="w-3 h-3 bg-gray-300 rounded-full mr-2"></div>
-                <span>Rejected</span>
+                <span>Refusées</span>
             </div>
         </div>
     </div>
@@ -85,11 +85,11 @@
     </div>
 </div>
 
-<!-- Recent Activities & Recommended Jobs -->
+<!-- Activités Récentes & Emplois Recommandés -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Recent Activities -->
+    <!-- Activités Récentes -->
     <div class="bg-white rounded-lg p-6 shadow-sm">
-        <h2 class="text-xl font-semibold mb-4">Recent Activities</h2>
+        <h2 class="text-xl font-semibold mb-4">Activités Récentes</h2>
         <div class="space-y-4">
             <div class="flex items-start">
                 <div class="bg-indigo-100 p-2 rounded-lg mr-3">
@@ -98,8 +98,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
-                    <p class="text-xs text-gray-500">12h ago</p>
+                    <p class="text-sm font-medium">Votre candidature a été acceptée pour 3 offres</p>
+                    <p class="text-xs text-gray-500">Il y a 12h</p>
                 </div>
             </div>
             <div class="flex items-start">
@@ -109,8 +109,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
-                    <p class="text-xs text-gray-500">12h ago</p>
+                    <p class="text-sm font-medium">Votre candidature a été acceptée pour 3 offres</p>
+                    <p class="text-xs text-gray-500">Il y a 12h</p>
                 </div>
             </div>
             <div class="flex items-start">
@@ -120,8 +120,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
-                    <p class="text-xs text-gray-500">12h ago</p>
+                    <p class="text-sm font-medium">Votre candidature a été acceptée pour 3 offres</p>
+                    <p class="text-xs text-gray-500">Il y a 12h</p>
                 </div>
             </div>
             <div class="flex items-start">
@@ -131,60 +131,60 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium">Your application has been accepted in 3 vacancy</p>
-                    <p class="text-xs text-gray-500">12h ago</p>
+                    <p class="text-sm font-medium">Votre candidature a été acceptée pour 3 offres</p>
+                    <p class="text-xs text-gray-500">Il y a 12h</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Recommended Jobs -->
+    <!-- Emplois Recommandés -->
     <div class="lg:col-span-2 bg-white rounded-lg p-6 shadow-sm">
-        <h2 class="text-xl font-semibold mb-4">Recommended Jobs</h2>
+        <h2 class="text-xl font-semibold mb-4">Emplois Recommandés</h2>
         <div class="space-y-4">
             <div class="border rounded-lg p-4">
                 <div class="flex items-center justify-between mb-2">
                     <div>
-                        <h3 class="font-semibold">Database Programmer</h3>
+                        <h3 class="font-semibold">Programmeur de Base de Données</h3>
                         <p class="text-sm text-gray-600">Maximuz Team</p>
                     </div>
-                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">REMOTE</span>
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">TÉLÉTRAVAIL</span>
                 </div>
-                <p class="text-sm text-gray-600 mb-2">$14,000 - $25,000</p>
-                <p class="text-sm text-gray-500">London, England</p>
+                <p class="text-sm text-gray-600 mb-2">14 000 € - 25 000 €</p>
+                <p class="text-sm text-gray-500">Londres, Angleterre</p>
             </div>
             <div class="border rounded-lg p-4">
                 <div class="flex items-center justify-between mb-2">
                     <div>
-                        <h3 class="font-semibold">Senior Programmer</h3>
+                        <h3 class="font-semibold">Programmeur Senior</h3>
                         <p class="text-sm text-gray-600">Klean n Clin Studios</p>
                     </div>
-                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">PART TIME</span>
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">TEMPS PARTIEL</span>
                 </div>
-                <p class="text-sm text-gray-600 mb-2">$14,000 - $25,000</p>
-                <p class="text-sm text-gray-500">Manchester, England</p>
+                <p class="text-sm text-gray-600 mb-2">14 000 € - 25 000 €</p>
+                <p class="text-sm text-gray-500">Manchester, Angleterre</p>
             </div>
             <div class="border rounded-lg p-4">
                 <div class="flex items-center justify-between mb-2">
                     <div>
-                        <h3 class="font-semibold">Intern UX Designer</h3>
+                        <h3 class="font-semibold">Stagiaire Designer UX</h3>
                         <p class="text-sm text-gray-600">Maximuz Team</p>
                     </div>
-                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">FULLTIME</span>
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">TEMPS PLEIN</span>
                 </div>
-                <p class="text-sm text-gray-600 mb-2">$14,000 - $25,000</p>
-                <p class="text-sm text-gray-500">London, England</p>
+                <p class="text-sm text-gray-600 mb-2">14 000 € - 25 000 €</p>
+                <p class="text-sm text-gray-500">Londres, Angleterre</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Featured Companies Section -->
+<!-- Section des Entreprises en Vedette -->
 <div class="mt-6">
     <div class="flex items-center justify-between mb-4">
-        <h2 class="text-xl font-semibold">Featured Companies</h2>
+        <h2 class="text-xl font-semibold">Entreprises en Vedette</h2>
         <a href="#" class="text-indigo-600 hover:underline flex items-center">
-            View More
+            Voir Plus
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
@@ -194,27 +194,27 @@
         <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
             <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
             <h3 class="font-semibold">Herman-Carter</h3>
-            <p class="text-sm text-gray-500">21 Vacancy</p>
+            <p class="text-sm text-gray-500">21 Offres</p>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
             <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
             <h3 class="font-semibold">Funk Inc.</h3>
-            <p class="text-sm text-gray-500">21 Vacancy</p>
+            <p class="text-sm text-gray-500">21 Offres</p>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
             <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
             <h3 class="font-semibold">Williamson Inc</h3>
-            <p class="text-sm text-gray-500">21 Vacancy</p>
+            <p class="text-sm text-gray-500">21 Offres</p>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
             <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
             <h3 class="font-semibold">Donnelly Ltd.</h3>
-            <p class="text-sm text-gray-500">21 Vacancy</p>
+            <p class="text-sm text-gray-500">21 Offres</p>
         </div>
         <div class="bg-white p-4 rounded-lg shadow-sm flex flex-col items-center">
             <div class="w-16 h-16 bg-gray-200 rounded-lg mb-3"></div>
             <h3 class="font-semibold">Herman-Carter</h3>
-            <p class="text-sm text-gray-500">21 Vacancy</p>
+            <p class="text-sm text-gray-500">21 Offres</p>
         </div>
     </div>
 </div>
@@ -226,7 +226,7 @@
         const ctx = document.getElementById('vacancyChart').getContext('2d');
         
         // Sample data
-        const labels = ['Week 01', 'Week 02', 'Week 03', 'Week 04', 'Week 05', 'Week 06', 'Week 07', 'Week 08', 'Week 09', 'Week 10'];
+        const labels = ['Semaine 01', 'Semaine 02', 'Semaine 03', 'Semaine 04', 'Semaine 05', 'Semaine 06', 'Semaine 07', 'Semaine 08', 'Semaine 09', 'Semaine 10'];
         const applicationData = [20, 40, 30, 70, 50, 60, 30, 20, 40, 50];
         const interviewData = [10, 20, 15, 30, 25, 40, 35, 25, 30, 20];
         const rejectedData = [5, 10, 8, 15, 12, 20, 18, 12, 15, 10];
@@ -237,7 +237,7 @@
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Application Sent',
+                        label: 'Candidatures Envoyées',
                         data: applicationData,
                         borderColor: '#6366F1',
                         backgroundColor: 'rgba(99, 102, 241, 0.1)',
@@ -246,7 +246,7 @@
                         pointBackgroundColor: '#6366F1'
                     },
                     {
-                        label: 'Interviews',
+                        label: 'Entretiens',
                         data: interviewData,
                         borderColor: '#10B981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -255,7 +255,7 @@
                         pointBackgroundColor: '#10B981'
                     },
                     {
-                        label: 'Rejected',
+                        label: 'Refusées',
                         data: rejectedData,
                         borderColor: '#D1D5DB',
                         backgroundColor: 'rgba(209, 213, 219, 0.1)',
