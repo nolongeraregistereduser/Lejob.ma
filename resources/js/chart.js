@@ -1,4 +1,5 @@
-import Chart from 'chart.js/auto';
+/*import Chart from 'chart.js/auto';
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('vacancyStats');
@@ -38,4 +39,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-}); 
+});   */

@@ -3,9 +3,9 @@
 @section('content')
 <div class="bg-white rounded-lg shadow-sm p-6">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Users Management</h1>
+        <h1 class="text-2xl font-bold">Gestion des Utilisateurs</h1>
         <button class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-            Add New User
+            Ajouter un Utilisateur
         </button>
     </div>
 
@@ -13,22 +13,22 @@
     <div class="flex flex-wrap gap-4 mb-6">
         <div class="flex-1 min-w-[200px]">
             <select id="role-filter" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent">
-                <option value="">All Roles</option>
-                <option value="admin">Admin</option>
+                <option value="">Tous les Rôles</option>
+                <option value="admin">Administrateur</option>
                 <option value="consultant">Consultant</option>
-                <option value="user">User</option>
+                <option value="user">Utilisateur</option>
             </select>
         </div>
         <div class="flex-1 min-w-[200px]">
             <select id="status-filter" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="pending">Pending</option>
-                <option value="inactive">Inactive</option>
+                <option value="">Tous les Statuts</option>
+                <option value="active">Actif</option>
+                <option value="pending">En Attente</option>
+                <option value="inactive">Inactif</option>
             </select>
         </div>
         <div class="flex-1 min-w-[200px]">
-            <input type="text" placeholder="Search users..." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent">
+            <input type="text" placeholder="Rechercher des utilisateurs..." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent">
         </div>
     </div>
 
@@ -37,11 +37,11 @@
         <table class="min-w-full bg-white">
             <thead>
                 <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                    <th class="py-3 px-6 text-left">User</th>
+                    <th class="py-3 px-6 text-left">Utilisateur</th>
                     <th class="py-3 px-6 text-left">Email</th>
-                    <th class="py-3 px-6 text-center">Role</th>
-                    <th class="py-3 px-6 text-center">Status</th>
-                    <th class="py-3 px-6 text-center">Registered</th>
+                    <th class="py-3 px-6 text-center">Rôle</th>
+                    <th class="py-3 px-6 text-center">Statut</th>
+                    <th class="py-3 px-6 text-center">Inscrit le</th>
                     <th class="py-3 px-6 text-center">Actions</th>
                 </tr>
             </thead>
@@ -61,20 +61,20 @@
                         </td>
                         <td class="py-3 px-6 text-center">
                             @if($user->role == 'admin')
-                                <span class="bg-purple-100 text-purple-600 py-1 px-3 rounded-full text-xs">Admin</span>
+                                <span class="bg-purple-100 text-purple-600 py-1 px-3 rounded-full text-xs">Administrateur</span>
                             @elseif($user->role == 'consultant')
                                 <span class="bg-indigo-100 text-indigo-600 py-1 px-3 rounded-full text-xs">Consultant</span>
                             @else
-                                <span class="bg-blue-100 text-blue-600 py-1 px-3 rounded-full text-xs">User</span>
+                                <span class="bg-blue-100 text-blue-600 py-1 px-3 rounded-full text-xs">Utilisateur</span>
                             @endif
                         </td>
                         <td class="py-3 px-6 text-center">
                             @if($user->status == 'active')
-                                <span class="bg-green-100 text-green-600 py-1 px-3 rounded-full text-xs">Active</span>
+                                <span class="bg-green-100 text-green-600 py-1 px-3 rounded-full text-xs">Actif</span>
                             @elseif($user->status == 'pending')
-                                <span class="bg-yellow-100 text-yellow-600 py-1 px-3 rounded-full text-xs">Pending</span>
+                                <span class="bg-yellow-100 text-yellow-600 py-1 px-3 rounded-full text-xs">En Attente</span>
                             @else
-                                <span class="bg-red-100 text-red-600 py-1 px-3 rounded-full text-xs">Inactive</span>
+                                <span class="bg-red-100 text-red-600 py-1 px-3 rounded-full text-xs">Inactif</span>
                             @endif
                         </td>
                         <td class="py-3 px-6 text-center">
@@ -85,30 +85,30 @@
                                 @if($user->role == 'consultant' && $user->status == 'pending')
                                     <form action="{{ route('admin.users.approve', $user->id) }}" method="POST" class="inline">
                                         @csrf
-                                        <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600">Approve</button>
+                                        <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600">Approuver</button>
                                     </form>
                                 @endif
                                 
                                 @if($user->status == 'inactive')
                                     <form action="{{ route('admin.users.activate', $user->id) }}" method="POST" class="inline">
                                         @csrf
-                                        <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600">Activate</button>
+                                        <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600">Activer</button>
                                     </form>
                                 @endif
                                 
-                                <button class="bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600 edit-user" data-id="{{ $user->id }}">Edit</button>
+                                <button class="bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600 edit-user" data-id="{{ $user->id }}">Modifier</button>
                                 
                                 <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" class="inline delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600">Delete</button>
+                                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600">Supprimer</button>
                                 </form>
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="py-6 text-center text-gray-500">No users found</td>
+                        <td colspan="6" class="py-6 text-center text-gray-500">Aucun utilisateur trouvé</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -119,7 +119,7 @@
     @if($users->hasPages())
     <div class="flex items-center justify-between mt-6">
         <div class="text-sm text-gray-600">
-            Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
+            Affichage de {{ $users->firstItem() }} à {{ $users->lastItem() }} sur {{ $users->total() }} résultats
         </div>
         <div class="flex space-x-2">
             {{ $users->links('pagination::tailwind') }}
@@ -132,7 +132,7 @@
 <div id="editUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-6 w-full max-w-md">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold">Edit User</h2>
+            <h2 class="text-xl font-bold">Modifier l'Utilisateur</h2>
             <button id="closeEditModal" class="text-gray-500 hover:text-gray-700">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -144,42 +144,42 @@
             @method('PUT')
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-                    Name
+                    Nom
                 </label>
-                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="name" name="name" type="text" placeholder="User name">
+                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="name" name="name" type="text" placeholder="Nom d'utilisateur">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                     Email
                 </label>
-                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="email" name="email" type="email" placeholder="Email address">
+                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="email" name="email" type="email" placeholder="Adresse email">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="role">
-                    Role
+                    Rôle
                 </label>
                 <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="role" name="role">
-                    <option value="user">User</option>
+                    <option value="user">Utilisateur</option>
                     <option value="consultant">Consultant</option>
-                    <option value="admin">Admin</option>
+                    <option value="admin">Administrateur</option>
                 </select>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="status">
-                    Status
+                    Statut
                 </label>
                 <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="status" name="status">
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="active">Actif</option>
+                    <option value="pending">En Attente</option>
+                    <option value="inactive">Inactif</option>
                 </select>
             </div>
             <div class="flex justify-end space-x-2">
                 <button type="button" id="cancelEditBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
-                    Cancel
+                    Annuler
                 </button>
                 <button type="submit" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800">
-                    Save Changes
+                    Enregistrer les Modifications
                 </button>
             </div>
         </form>
@@ -190,20 +190,20 @@
 <div id="deleteConfirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-6 w-full max-w-md">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold">Confirm Deletion</h2>
+            <h2 class="text-xl font-bold">Confirmer la Suppression</h2>
             <button id="closeDeleteModal" class="text-gray-500 hover:text-gray-700">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
         </div>
-        <p class="mb-4">Are you sure you want to delete this user? This action cannot be undone.</p>
+        <p class="mb-4">Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action ne peut pas être annulée.</p>
         <div class="flex justify-end space-x-2">
             <button id="cancelDeleteBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
-                Cancel
+                Annuler
             </button>
             <button id="confirmDeleteBtn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                Delete User
+                Supprimer l'Utilisateur
             </button>
         </div>
     </div>
@@ -286,8 +286,17 @@
             const userName = row.querySelector('td:nth-child(1) span').textContent.toLowerCase();
             const userEmail = row.querySelector('td:nth-child(2) span').textContent.toLowerCase();
             
-            const roleMatch = !role || userRole.includes(role.toLowerCase());
-            const statusMatch = !status || userStatus.includes(status.toLowerCase());
+            // Check filters based on the new French labels
+            let roleMatch = !role;
+            if (role === 'admin' && userRole.includes('administrateur')) roleMatch = true;
+            else if (role === 'consultant' && userRole.includes('consultant')) roleMatch = true;
+            else if (role === 'user' && userRole.includes('utilisateur')) roleMatch = true;
+            
+            let statusMatch = !status;
+            if (status === 'active' && userStatus.includes('actif')) statusMatch = true;
+            else if (status === 'pending' && userStatus.includes('en attente')) statusMatch = true;
+            else if (status === 'inactive' && userStatus.includes('inactif')) statusMatch = true;
+            
             const searchMatch = !search || userName.includes(search) || userEmail.includes(search);
             
             if (roleMatch && statusMatch && searchMatch) {
