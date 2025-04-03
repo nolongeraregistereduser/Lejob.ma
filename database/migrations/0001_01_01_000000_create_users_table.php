@@ -14,15 +14,23 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('username')->nullable()->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->enum('role', ['user', 'admin','consultant']);
+            $table->string('whatsapp')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->text('bio')->nullable();
+            $table->string('title')->nullable(); // titre professionnel
+            $table->string('profile_picture')->nullable();
+            $table->boolean('available_for_hire')->default(false);
+            $table->enum('role', ['user', 'admin', 'consultant']);
             $table->enum('status', ['active', 'inactive']);
-
-            // mazal anzid columns mni an7tajhom, for the moment i will implement only authentication
-            
             $table->rememberToken();
             $table->timestamps();
         });

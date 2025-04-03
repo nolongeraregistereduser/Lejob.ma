@@ -116,4 +116,10 @@ Route::get('/test-email', function () {
     }
 });
 
+// Routes pour le profil utilisateur
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [App\Http\Controllers\user\ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile/update', [App\Http\Controllers\user\ProfileController::class, 'update'])->name('profile.update');
+});
+
 

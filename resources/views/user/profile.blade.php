@@ -4,17 +4,22 @@
 @section('page-title', 'Modifier le Profil')
 
 @section('content')
+@if(session('success'))
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
+        <p>{{ session('success') }}</p>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+        <p>{{ session('error') }}</p>
+    </div>
+@endif
+
 <div class="bg-white rounded-lg shadow-sm p-6">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-bold">Modifier le Profil</h2>
         <div class="flex space-x-2">
-            <div class="flex items-center">
-                <span class="mr-2 text-sm text-gray-600 font-medium">Disponible pour embauche?</span>
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" name="available_for_hire" class="sr-only peer" {{ $user->available_for_hire ?? false ? 'checked' : '' }}>
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                </label>
-            </div>
             <button type="button" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">Annuler</button>
             <button type="submit" form="profile-form" class="px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors">Enregistrer</button>
         </div>
@@ -23,6 +28,15 @@
     <form id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        
+        <!-- Case à cocher déplacée à l'intérieur du formulaire -->
+        <div class="flex items-center mb-6">
+            <span class="mr-2 text-sm text-gray-600 font-medium">Disponible pour embauche?</span>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="available_for_hire" class="sr-only peer" {{ $user->available_for_hire ?? false ? 'checked' : '' }}>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+            </label>
+        </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Left column - Form fields (wider) -->
