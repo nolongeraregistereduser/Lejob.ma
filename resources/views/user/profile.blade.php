@@ -1,0 +1,390 @@
+@extends('layouts.app')
+
+@section('title', 'Edit Profile')
+@section('page-title', 'Edit Profile')
+
+@section('content')
+<div class="bg-white rounded-lg shadow-sm p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold">Edit Profile</h2>
+        <div class="flex space-x-2">
+            <div class="flex items-center">
+                <span class="mr-2 text-sm text-gray-600">Available for hire?</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" name="available_for_hire" class="sr-only peer" {{ $user->available_for_hire ?? false ? 'checked' : '' }}>
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                </label>
+            </div>
+            <button type="button" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors">Cancel</button>
+            <button type="submit" form="profile-form" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">Save Changes</button>
+        </div>
+    </div>
+
+    <form id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left column - Form fields -->
+            <div class="lg:col-span-2">
+                <!-- GENERALS Section -->
+                <div class="mb-8">
+                    <h3 class="text-sm font-bold uppercase text-gray-600 mb-4">GENERALS</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label for="first_name" class="block text-sm text-gray-600 mb-1">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name', $user->first_name ?? $user->name ?? '') }}" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2">
+                        </div>
+                        
+                        <div>
+                            <label for="middle_name" class="block text-sm text-gray-600 mb-1">Middle Name</label>
+                            <input type="text" id="middle_name" name="middle_name" value="{{ old('middle_name', $user->middle_name ?? '') }}" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2" placeholder="Type here">
+                        </div>
+                        
+                        <div>
+                            <label for="last_name" class="block text-sm text-gray-600 mb-1">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name', $user->last_name ?? '') }}" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="username" class="block text-sm text-gray-600 mb-1">Username</label>
+                            <input type="text" id="username" name="username" value="{{ old('username', $user->username ?? '') }}" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2">
+                        </div>
+                        
+                        <div>
+                            <label for="password" class="block text-sm text-gray-600 mb-1">Password</label>
+                            <div class="relative">
+                                <input type="password" id="password" name="password" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2" placeholder="**************">
+                                <button type="button" class="absolute right-0 top-2 text-purple-600 text-xs font-semibold" onclick="togglePassword('password')">SHOW</button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="password_confirmation" class="block text-sm text-gray-600 mb-1">Re-Type Password</label>
+                            <div class="relative">
+                                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2" placeholder="**************">
+                                <button type="button" class="absolute right-0 top-2 text-purple-600 text-xs font-semibold" onclick="togglePassword('password_confirmation')">SHOW</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONTACT Section -->
+                <div class="mb-8">
+                    <h3 class="text-sm font-bold uppercase text-gray-600 mb-4">CONTACT</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label for="phone" class="block text-sm text-gray-600 mb-1">Mobile/Phone</label>
+                            <div class="flex items-center border-b border-gray-300">
+                                <span class="text-gray-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                    </svg>
+                                </span>
+                                <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone ?? '') }}" class="w-full focus:outline-none py-2" placeholder="+50 123 456 78">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="whatsapp" class="block text-sm text-gray-600 mb-1">Whatsapp</label>
+                            <div class="flex items-center border-b border-gray-300">
+                                <span class="text-gray-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                                        <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+                                    </svg>
+                                </span>
+                                <input type="text" id="whatsapp" name="whatsapp" value="{{ old('whatsapp', $user->whatsapp ?? '') }}" class="w-full focus:outline-none py-2" placeholder="+50 444 5511 11">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm text-gray-600 mb-1">Email</label>
+                            <div class="flex items-center border-b border-gray-300">
+                                <span class="text-gray-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                    </svg>
+                                </span>
+                                <input type="email" id="email" name="email" value="{{ old('email', $user->email ?? '') }}" class="w-full focus:outline-none py-2" placeholder="davidheree@gmail.com">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="address" class="block text-sm text-gray-600 mb-1">Address</label>
+                            <input type="text" id="address" name="address" value="{{ old('address', $user->address ?? '') }}" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2" placeholder="Franklin Avenue St. Corner">
+                        </div>
+                        
+                        <div>
+                            <label for="city" class="block text-sm text-gray-600 mb-1">City</label>
+                            <div class="relative">
+                                <input type="text" id="city" name="city" value="{{ old('city', $user->city ?? '') }}" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2" placeholder="London">
+                                <button type="button" class="absolute right-0 top-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="country" class="block text-sm text-gray-600 mb-1">Country</label>
+                            <div class="relative">
+                                <input type="text" id="country" name="country" value="{{ old('country', $user->country ?? '') }}" class="w-full border-b border-gray-300 focus:border-purple-500 focus:outline-none py-2" placeholder="England">
+                                <button type="button" class="absolute right-0 top-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ABOUT ME Section -->
+                <div class="mb-8">
+                    <h3 class="text-sm font-bold uppercase text-gray-600 mb-4">ABOUT ME</h3>
+                    
+                    <div>
+                        <label for="bio" class="block text-sm text-gray-600 mb-1">Tell About You</label>
+                        <textarea id="bio" name="bio" rows="6" class="w-full border border-gray-300 rounded-md p-3 focus:border-purple-500 focus:outline-none">{{ old('bio', $user->bio ?? '') }}</textarea>
+                    </div>
+                </div>
+                
+                <!-- SKILLS Section -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold uppercase text-gray-600">SKILLS</h3>
+                        <button type="button" class="text-purple-600 text-sm font-semibold flex items-center">
+                            <span class="mr-1">+</span> Add New Skills
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm">Programming</span>
+                                <span class="text-sm font-semibold">78%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm">Prototyping</span>
+                                <span class="text-sm font-semibold">65%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tool Icons -->
+                <div class="mt-8 flex flex-wrap gap-2">
+                    <button type="button" class="p-3 bg-blue-500 text-white rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button type="button" class="p-3 bg-white border border-gray-300 rounded-md flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h10v7h-2l-1 2H8l-1-2H5V5z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button type="button" class="p-3 bg-white border border-gray-300 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button type="button" class="p-3 bg-white border border-gray-300 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                        </svg>
+                    </button>
+                    <button type="button" class="p-3 bg-white border border-gray-300 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button type="button" class="p-3 bg-white border border-gray-300 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button type="button" class="p-3 bg-white border border-gray-300 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Right column - Profile preview -->
+            <div class="bg-white rounded-lg shadow p-0 flex flex-col items-center">
+                <!-- Profile card with border and shadow -->
+                <div class="w-full bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
+                    <!-- Profile header with avatar and progress ring -->
+                    <div class="flex flex-col items-center pt-8 pb-4">
+                        <div class="relative mb-3">
+                            <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                                @if(isset($user->profile_picture))
+                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <div class="text-gray-400 text-4xl">{{ substr($user->name ?? 'User', 0, 1) }}</div>
+                                @endif
+                            </div>
+                            <!-- Purple circular progress indicator -->
+                            <svg class="absolute top-0 left-0 w-24 h-24" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="46" fill="none" stroke="#E5E7EB" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="46" fill="none" stroke="#7C3AED" stroke-width="8" stroke-dasharray="240, 360" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                            </svg>
+                            <input type="file" name="profile_picture" id="profile_picture" class="hidden">
+                            <label for="profile_picture" class="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                            </label>
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold text-center">{{ $user->name ?? 'Oda Dink' }}</h3>
+                        <p class="text-gray-500 text-center">{{ $user->title ?? 'Programmer' }}</p>
+                    </div>
+                    
+                    <!-- Followers section with border -->
+                    <div class="grid grid-cols-2 w-full border-t border-b border-gray-100">
+                        <div class="text-center py-4 px-2">
+                            <p class="font-bold text-lg">228</p>
+                            <p class="text-sm text-gray-500">Following</p>
+                        </div>
+                        <div class="text-center py-4 px-2 border-l border-gray-100">
+                            <p class="font-bold text-lg">4,842</p>
+                            <p class="text-sm text-gray-500">Followers</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact info section -->
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                </svg>
+                            </div>
+                            <span>{{ $user->phone ?? '+50 123 456 78' }}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                            </div>
+                            <span>{{ $user->email ?? 'davidheree@gmail.com' }}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Skills chart section with border -->
+                    <div class="border-t border-gray-100 p-6">
+                        <div class="flex items-center justify-center space-x-4">
+                            <div class="relative w-16 h-16">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#E5E7EB" stroke-width="3"/>
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#F97316" stroke-width="3" stroke-dasharray="66, 100" stroke-dashoffset="0" transform="rotate(-90 18 18)"/>
+                                    <text x="18" y="20" class="text-xs font-semibold text-center" text-anchor="middle">66%</text>
+                                </svg>
+                                <span class="block text-center text-xs mt-1">PHP</span>
+                            </div>
+                            <div class="relative w-16 h-16">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#E5E7EB" stroke-width="3"/>
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#22C55E" stroke-width="3" stroke-dasharray="31, 100" stroke-dashoffset="0" transform="rotate(-90 18 18)"/>
+                                    <text x="18" y="20" class="text-xs font-semibold text-center" text-anchor="middle">31%</text>
+                                </svg>
+                                <span class="block text-center text-xs mt-1">Vue</span>
+                            </div>
+                            <div class="relative w-16 h-16">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#E5E7EB" stroke-width="3"/>
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#14B8A6" stroke-width="3" stroke-dasharray="7, 100" stroke-dashoffset="0" transform="rotate(-90 18 18)"/>
+                                    <text x="18" y="20" class="text-xs font-semibold text-center" text-anchor="middle">7%</text>
+                                </svg>
+                                <span class="block text-center text-xs mt-1">Laravel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolios section in a separate card -->
+                <div class="w-full bg-white rounded-lg border border-gray-100 shadow-sm mt-6 p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold">Portfolios</h3>
+                        <button type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <a href="/davidheree.porto" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white font-bold">f</span>
+                            </div>
+                            <span>/davidheree.porto</span>
+                        </a>
+                        
+                        <a href="/david.drib" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                            <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white font-bold">d</span>
+                            </div>
+                            <span>/david.drib</span>
+                        </a>
+                        
+                        <a href="/davidheree222" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                            <div class="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white font-bold">in</span>
+                            </div>
+                            <span>/davidheree222</span>
+                        </a>
+                        
+                        <a href="/davidhereechan" class="flex items-center p-2 hover:bg-gray-50 rounded-md">
+                            <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white font-bold">yt</span>
+                            </div>
+                            <span>/davidhereechan</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@push('scripts')
+<script>
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const button = input.nextElementSibling;
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            button.textContent = 'HIDE';
+        } else {
+            input.type = 'password';
+            button.textContent = 'SHOW';
+        }
+    }
+</script>
+@endpush
+@endsection

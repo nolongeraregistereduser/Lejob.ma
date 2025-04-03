@@ -27,9 +27,17 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected routes for all authenticated users
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'role:user'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])
+    ->middleware(['auth', 'role:user'])
+    ->name('dashboard');
+
+// Add profile routes
+Route::get('/profile', [App\Http\Controllers\user\DashboardController::class, 'profile'])
+    ->middleware(['auth', 'role:user'])
+    ->name('profile');
+Route::post('/profile/update', [App\Http\Controllers\user\DashboardController::class, 'updateProfile'])
+    ->middleware(['auth', 'role:user'])
+    ->name('profile.update');
 
 // Routes for job seekers (users)
 Route::get('/user/dashboard', function () {
