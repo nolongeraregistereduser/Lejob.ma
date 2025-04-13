@@ -42,7 +42,7 @@ class ProfileController extends Controller
                 'title' => 'nullable|string|max:255',
                 'password' => 'nullable|string|min:8|confirmed',
                 'profile_picture' => 'nullable|image|max:2048',
-                // Nouveaux champs pour les liens sociaux
+                'title' => 'nullable|string|max:255',
                 'portfolio' => 'nullable|string',
                 'linkedin' => 'nullable|string|max:255',
                 'github' => 'nullable|string|max:255',

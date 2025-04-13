@@ -65,6 +65,12 @@
                         </div>
                         
                         <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1.5">Titre professionnel</label>
+                            <input type="text" id="title" name="title" value="{{ old('title', $user->title ?? '') }}" 
+                                class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="Développeur Web">
+                        </div>
+                        
+                        <div>
                             <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Mot de passe</label>
                             <input type="password" id="password" name="password" 
                                 class="w-full h-12 border-2 border-gray-200 rounded-full px-4 py-2 bg-white focus:border-purple-500 focus:ring-0 focus:outline-none transition-colors text-gray-800" placeholder="**************">

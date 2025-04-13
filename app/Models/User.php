@@ -19,18 +19,18 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'email',
+        'password',
         'first_name',
         'last_name',
         'username',
-        'email',
-        'password',
         'phone',
         'whatsapp',
         'address',
         'city',
         'country',
         'bio',
-        'title',
+        'title', // Make sure this is included
         'profile_picture',
         'available_for_hire',
         'role',
