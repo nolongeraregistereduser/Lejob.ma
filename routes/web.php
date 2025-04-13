@@ -123,3 +123,15 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+// Consultant routes
+Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'index'])->name('consultant.dashboard');
+    Route::get('/availability', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'availability'])->name('consultant.availability');
+    Route::get('/bookings', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'bookings'])->name('consultant.bookings');
+    
+    // Profile routes
+    Route::get('/profile', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'show'])->name('consultant.profile');
+    Route::put('/profile/update', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'update'])->name('consultant.profile.update');
+});
+
+

@@ -38,7 +38,7 @@ class AuthController extends Controller
             $user->status = 'active';}
 
         if($request->role == 'consultant'){
-            $user->status = 'pending';}
+            $user->status = 'inactive';}
 
         // Remove the dd() to allow registration to complete
         // dd($user);
