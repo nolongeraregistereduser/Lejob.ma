@@ -42,6 +42,12 @@ class ProfileController extends Controller
                 'title' => 'nullable|string|max:255',
                 'password' => 'nullable|string|min:8|confirmed',
                 'profile_picture' => 'nullable|image|max:2048',
+                // Nouveaux champs pour les liens sociaux
+                'portfolio' => 'nullable|string',
+                'linkedin' => 'nullable|string|max:255',
+                'github' => 'nullable|string|max:255',
+                'twitter' => 'nullable|string|max:255',
+                'website' => 'nullable|string|max:255',
             ]);
             
             // Débogage
@@ -87,6 +93,13 @@ class ProfileController extends Controller
             $user->country = $request->country;
             $user->bio = $request->bio;
             $user->title = $request->title;
+            
+            // Mise à jour des liens sociaux
+            $user->portfolio = $request->portfolio;
+            $user->linkedin = $request->linkedin;
+            $user->github = $request->github;
+            $user->twitter = $request->twitter;
+            $user->website = $request->website;
             
             $user->save();
             
