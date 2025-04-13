@@ -90,7 +90,9 @@ class ProfileController extends Controller
             
             $user->save();
             
-            return redirect()->route('profile')->with('success', 'Profil mis à jour avec succès!');
+            // Use flash instead of with to ensure the message only persists for one request
+            session()->flash('success', 'Profil mis à jour avec succès!');
+            return redirect()->route('profile');
         } catch (\Exception $e) {
             Log::error('Erreur lors de la mise à jour du profil: ' . $e->getMessage());
             return redirect()->route('profile')->with('error', 'Une erreur s\'est produite lors de la mise à jour du profil: ' . $e->getMessage());
