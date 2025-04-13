@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\user\ProfileController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Consultant\AvailabilityController;
 
 // Public routes
 Route::get('/', function () {
@@ -43,13 +46,33 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/jobs', function () {
         return view('jobs.index');
     })->name('jobs.index');
+    
+    // Reservations
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations/create/{consultant_id}', [ReservationController::class, 'create'])->name('reservations.create');
+    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
+    Route::delete('/reservations/{reservation}', [ReservationController::class, 'cancel'])->name('reservations.cancel');
+    
+    // Feedback
+    Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+    Route::put('/feedback/{feedback}', [FeedbackController::class, 'update'])->name('feedback.update');
 });
 
 // Consultant routes
 Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'index'])->name('consultant.dashboard');
-    Route::get('/availability', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'availability'])->name('consultant.availability');
-    Route::get('/bookings', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'bookings'])->name('consultant.bookings');
+    
+    // Availability
+    Route::get('/availability', [AvailabilityController::class, 'index'])->name('consultant.availability');
+    Route::post('/availability', [AvailabilityController::class, 'store'])->name('consultant.availability.store');
+    Route::put('/availability/{availability}', [AvailabilityController::class, 'update'])->name('consultant.availability.update');
+    Route::delete('/availability/{availability}', [AvailabilityController::class, 'destroy'])->name('consultant.availability.destroy');
+    
+    // Bookings
+    Route::get('/bookings', [App\Http\Controllers\Consultant\ReservationController::class, 'index'])->name('consultant.bookings');
+    Route::put('/bookings/{reservation}/confirm', [App\Http\Controllers\Consultant\ReservationController::class, 'confirm'])->name('consultant.bookings.confirm');
+    Route::put('/bookings/{reservation}/cancel', [App\Http\Controllers\Consultant\ReservationController::class, 'cancel'])->name('consultant.bookings.cancel');
     
     // Profile routes
     Route::get('/profile', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'show'])->name('consultant.profile');
