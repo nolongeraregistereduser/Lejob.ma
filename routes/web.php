@@ -24,9 +24,9 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/consultants', function () {
-    return view('consultants.index');
-})->name('consultants.index');
+// Add these routes to your existing routes file
+Route::get('/consultants', [App\Http\Controllers\ConsultantController::class, 'index'])->name('consultants.index');
+Route::get('/consultants/{id}', [App\Http\Controllers\ConsultantController::class, 'show'])->name('consultants.show');
 
 // User routes (regular users only)
 Route::middleware(['auth', 'role:user'])->group(function () {
