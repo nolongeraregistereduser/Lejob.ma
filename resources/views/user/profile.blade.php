@@ -25,7 +25,7 @@
 
     <form id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('POST')
         
         <!-- Case à cocher déplacée à l'intérieur du formulaire -->
         <div class="flex items-center mb-6">

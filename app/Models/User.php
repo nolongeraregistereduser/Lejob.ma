@@ -60,4 +60,15 @@ class User extends Authenticatable
             'available_for_hire' => 'boolean',
         ];
     }
+    
+    /**
+     * Check if the user has a specific role
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
 }

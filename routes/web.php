@@ -1,127 +1,49 @@
 <?php
 
-use App\Http\Controllers\admin\InterviewsController;
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-
+use App\Http\Controllers\user\DashboardController;
+use App\Http\Controllers\user\ProfileController;
 
 // Public routes
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Authentication routes
+Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
+Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+
+// Public pages
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/consultants', function () {
+    return view('consultants.index');
+})->name('consultants.index');
 
-// Authentication routes
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Protected routes for all authenticated users
-Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])
-    ->middleware(['auth', 'role:user'])
-    ->name('dashboard');
-
-// Add profile routes
-Route::get('/profile', [App\Http\Controllers\user\DashboardController::class, 'profile'])
-    ->middleware(['auth', 'role:user'])
-    ->name('profile');
-Route::post('/profile/update', [App\Http\Controllers\user\DashboardController::class, 'updateProfile'])
-    ->middleware(['auth', 'role:user'])
-    ->name('profile.update');
-
-// Routes for job seekers (users)
-Route::get('/user/dashboard', function () {
-    return view('user.dashboard');
-})->middleware(['auth', 'role:user'])->name('user.dashboard');
-
-Route::get('/cv/create', function () {
-    return view('cv.create');
-})->middleware(['auth', 'role:user'])->name('cv.create');
-
-Route::get('/jobs', function () {
-    return view('jobs.index');
-})->middleware(['auth', 'role:user'])->name('jobs.index');
-
-
-
-
-// Routes for consultants
-Route::get('/consultant/dashboard', function () {
-    return view('consultant.dashboard');
-})->middleware(['auth', 'role:consultant'])->name('consultant.dashboard');
-
-Route::get('/consultant/bookings', function () {
-    return view('consultant.bookings');
-})->middleware(['auth', 'role:consultant'])->name('consultant.bookings');
-
-Route::get('/consultant/availability', function () {
-    return view('consultant.availability');
-})->middleware(['auth', 'role:consultant'])->name('consultant.availability');
-
-Route::get('/consultant/profile', function () {
-    return view('consultant.profile');
-})->middleware(['auth', 'role:consultant'])->name('consultant.profile');
-
-// Routes for admins
-// Inside your admin routes group
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-
-    // Add this route for users management
-    Route::get('/admin/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.users');
-    Route::post('/admin/users/{id}/approve', [App\Http\Controllers\Admin\UserManagementController::class, 'approve'])->name('admin.users.approve');
-    Route::post('/admin/users/{id}/reject', [App\Http\Controllers\Admin\UserManagementController::class, 'reject'])->name('admin.users.reject');
-    Route::post('/admin/users/{id}/activate', [App\Http\Controllers\Admin\UserManagementController::class, 'activate'])->name('admin.users.activate');
-    Route::delete('/admin/users/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'delete'])->name('admin.users.delete');
-
-
-    Route::get('/admin/jobs', [App\Http\Controllers\admin\JobsController::class, 'index'])->name('admin.jobs');
+// User routes (regular users only)
+Route::middleware(['auth', 'role:user'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    Route::get('/admin/interviews', [App\Http\Controllers\admin\InterviewsController::class, 'index'])->name('admin.interviews');
-
-    Route::get('/admin/statistics', [App\Http\Controllers\admin\StatisticsController::class, 'index'])->name('admin.statistics');
-});
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     
-
-
-// Test route
-Route::get('/test-middleware', function () {
-    return 'Middleware is working!';
-})->middleware(['auth', 'role:admin']);
-
-Route::get('/test-email', function () {
-    try {
-        $to = "itsmezouhairi@gmail.com"; // Change this to your email
-        
-        Mail::raw('This is a test email to verify SMTP configuration is working.', function ($message) use ($to) {
-            $message->to($to)
-                ->subject('SMTP Test Email from LeJob.ma');
-        });
-        
-        return "Test email sent successfully! Please check your inbox.";
-    } catch (\Exception $e) {
-        return "Error sending email: " . $e->getMessage();
-    }
+    // CV
+    Route::get('/cv/create', function () {
+        return view('cv.create');
+    })->name('cv.create');
+    
+    // Jobs
+    Route::get('/jobs', function () {
+        return view('jobs.index');
+    })->name('jobs.index');
 });
-
-// Routes pour le profil utilisateur
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [App\Http\Controllers\user\ProfileController::class, 'show'])->name('profile');
-    Route::put('/profile/update', [App\Http\Controllers\user\ProfileController::class, 'update'])->name('profile.update');
-});
-
 
 // Consultant routes
 Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(function () {
@@ -131,7 +53,26 @@ Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(func
     
     // Profile routes
     Route::get('/profile', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'show'])->name('consultant.profile');
-    Route::put('/profile/update', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'update'])->name('consultant.profile.update');
+    Route::post('/profile/update', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'update'])->name('consultant.profile.update');
+});
+
+// Admin routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+    // User management
+    Route::get('/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.users');
+    Route::post('/users/{id}/approve', [App\Http\Controllers\Admin\UserManagementController::class, 'approve'])->name('admin.users.approve');
+    Route::post('/users/{id}/reject', [App\Http\Controllers\Admin\UserManagementController::class, 'reject'])->name('admin.users.reject');
+    Route::post('/users/{id}/activate', [App\Http\Controllers\Admin\UserManagementController::class, 'activate'])->name('admin.users.activate');
+    Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'delete'])->name('admin.users.delete');
+
+    // Other admin routes
+    Route::get('/jobs', [App\Http\Controllers\Admin\JobsController::class, 'index'])->name('admin.jobs');
+    Route::get('/interviews', [App\Http\Controllers\Admin\InterviewsController::class, 'index'])->name('admin.interviews');
+    Route::get('/statistics', [App\Http\Controllers\Admin\StatisticsController::class, 'index'])->name('admin.statistics');
 });
 
 
