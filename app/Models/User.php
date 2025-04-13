@@ -71,4 +71,25 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+
+    // Relationships for booking system
+    public function reservationsAsUser()
+    {
+        return $this->hasMany(Reservation::class, 'user_id');
+    }
+
+    public function reservationsAsConsultant()
+    {
+        return $this->hasMany(Reservation::class, 'consultant_id');
+    }
+
+    public function availabilities()
+    {
+        return $this->hasMany(Availability::class, 'consultant_id');
+    }
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class);
+    }
 }
