@@ -29,7 +29,7 @@
         <div class="bg-white bg-opacity-90 shadow-xl rounded-lg overflow-hidden">
             <form action="{{ route('consultant.profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
+                @method('POST')
                 
                 <!-- Profile Header -->
                 <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-16 relative">
