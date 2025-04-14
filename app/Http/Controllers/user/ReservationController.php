@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\user;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -16,66 +16,58 @@ class ReservationController extends Controller
     }
 
     /**
-     * Display a listing of the user's reservations.
+     * Afficher la liste des réservations de l'utilisateur
      */
     public function index()
     {
-        $reservations = Auth::user()->reservationsAsUser()
-            ->with('consultant')
+        $reservations = Reservation::with(['consultant', 'feedback'])
+            ->where('user_id', Auth::id())
             ->orderBy('date', 'desc')
+            ->orderBy('time_slot', 'desc')
             ->get();
-        
+            
         return view('user.reservations.index', compact('reservations'));
     }
 
     /**
-     * Show the form for creating a new reservation.
+     * Afficher le formulaire de création d'une réservation
      */
-    public function create()
+    public function create(Request $request)
     {
         $consultants = User::where('role', 'consultant')
-            ->with(['reservationsAsConsultant' => function($query) {
-                $query->where('status', '!=', 'cancelled');
-            }])
+            ->where('status', 'active')
+            ->orderBy('name')
             ->get();
-        
-        return view('user.reservations.create', compact('consultants'));
+            
+        $selectedConsultantId = $request->input('consultant_id');
+            
+        return view('user.reservations.create', compact('consultants', 'selectedConsultantId'));
     }
 
     /**
-     * Store a newly created reservation in database.
+     * Enregistrer une nouvelle réservation
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'consultant_id' => 'required|exists:users,id',
             'date' => 'required|date|after_or_equal:today',
-            'time_slot' => 'required|in:09:00,10:00,11:00,13:00,14:00,15:00,16:00',
+            'time_slot' => 'required',
+            'notes' => 'nullable|string|max:500',
         ]);
-
-        // Check for time slot conflicts
-        $conflictExists = Reservation::where('consultant_id', $validated['consultant_id'])
-            ->where('date', $validated['date'])
-            ->where('time_slot', $validated['time_slot'])
-            ->where('status', '!=', 'cancelled')
-            ->exists();
-
-        if ($conflictExists) {
-            return back()->with('error', 'This time slot is already booked. Please choose another one.');
-        }
-
-        // Create the reservation
+        
         $reservation = new Reservation([
             'user_id' => Auth::id(),
             'consultant_id' => $validated['consultant_id'],
             'date' => $validated['date'],
             'time_slot' => $validated['time_slot'],
             'status' => 'pending',
+            'notes' => $validated['notes'] ?? null,
         ]);
-
+        
         $reservation->save();
-
+        
         return redirect()->route('user.reservations.index')
-            ->with('success', 'Reservation submitted successfully!');
+            ->with('success', 'Votre demande de réservation a été envoyée avec succès.');
     }
 }

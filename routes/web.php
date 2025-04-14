@@ -45,7 +45,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     // User reservation routes
     Route::prefix('user')->name('user.')->group(function () {
         Route::resource('reservations', \App\Http\Controllers\user\ReservationController::class)
-            ->only(['index', 'create', 'store']);
+            ->only(['index', 'create', 'store', 'show']);
             
         // Routes de feedback
         Route::get('reservations/{reservation}/feedback', [\App\Http\Controllers\user\FeedbackController::class, 'create'])
