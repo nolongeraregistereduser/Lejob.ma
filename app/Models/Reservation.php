@@ -28,4 +28,20 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class, 'consultant_id');
     }
+
+    /**
+     * Feedback associé à cette réservation
+     */
+    public function feedback()
+    {
+        return $this->hasOne(Feedback::class);
+    }
+
+    /**
+     * Vérifier si cette réservation peut recevoir un feedback
+     */
+    public function canLeaveFeedback()
+    {
+        return $this->status === 'completed' && !$this->feedback()->exists();
+    }
 }

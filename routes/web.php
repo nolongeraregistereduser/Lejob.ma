@@ -21,9 +21,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/consultants', function () {
-    return view('consultants.index');
-})->name('consultants.index');
+Route::get('/consultants', [App\Http\Controllers\ConsultantController::class, 'index'])->name('consultants.index');
 
 // User routes (regular users only)
 Route::middleware(['auth', 'role:user'])->group(function () {
@@ -48,6 +46,12 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::prefix('user')->name('user.')->group(function () {
         Route::resource('reservations', \App\Http\Controllers\user\ReservationController::class)
             ->only(['index', 'create', 'store']);
+            
+        // Routes de feedback
+        Route::get('reservations/{reservation}/feedback', [\App\Http\Controllers\user\FeedbackController::class, 'create'])
+            ->name('feedback.create');
+        Route::post('reservations/{reservation}/feedback', [\App\Http\Controllers\user\FeedbackController::class, 'store'])
+            ->name('feedback.store');
     });
 });
 
@@ -55,7 +59,11 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'index'])->name('consultant.dashboard');
     Route::get('/availability', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'availability'])->name('consultant.availability');
-    Route::get('/bookings', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'bookings'])->name('consultant.bookings');
+    
+    Route::get('/bookings', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'index'])->name('consultant.bookings');
+    Route::post('/bookings/{reservation}/accept', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'accept'])->name('consultant.bookings.accept');
+    Route::post('/bookings/{reservation}/reject', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'reject'])->name('consultant.bookings.reject');
+    Route::post('/bookings/{reservation}/complete', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'complete'])->name('consultant.bookings.complete');
     
     // Profile routes
     Route::get('/profile', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'show'])->name('consultant.profile');

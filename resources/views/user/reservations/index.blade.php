@@ -86,6 +86,20 @@
                                         {{ ucfirst($reservation->status) }}
                                     </span>
                                 </td>
+                                @if($reservation->status === 'completed' && !$reservation->feedback)
+                                <td class="px-6 py-4 whitespace-no-wrap">
+                                    <a href="{{ route('user.feedback.create', $reservation) }}" 
+                                       class="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                        Laisser un avis
+                                    </a>
+                                </td>
+                                @elseif($reservation->feedback)
+                                <td class="px-6 py-4 whitespace-no-wrap">
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
+                                        Avis laissé ({{ $reservation->feedback->rating }}/5)
+                                    </span>
+                                </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

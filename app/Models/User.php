@@ -101,4 +101,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class, 'user_id');
     }
+
+    /**
+     * Obtenir les feedbacks reçus par ce consultant
+     */
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'consultant_id');
+    }
 }
