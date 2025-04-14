@@ -71,4 +71,34 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+
+    /**
+     * Get the reservations where the user is a seeker
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reservationsAsSeeker()
+    {
+        return $this->hasMany(Reservation::class, 'seeker_id');
+    }
+
+    /**
+     * Get the reservations where the user is a consultant
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reservationsAsConsultant()
+    {
+        return $this->hasMany(Reservation::class, 'consultant_id');
+    }
+
+    /**
+     * Get the reservations where the user is a regular user (job seeker)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reservationsAsUser()
+    {
+        return $this->hasMany(Reservation::class, 'user_id');
+    }
 }

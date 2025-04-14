@@ -43,6 +43,12 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/jobs', function () {
         return view('jobs.index');
     })->name('jobs.index');
+    
+    // User reservation routes
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::resource('reservations', \App\Http\Controllers\user\ReservationController::class)
+            ->only(['index', 'create', 'store']);
+    });
 });
 
 // Consultant routes
