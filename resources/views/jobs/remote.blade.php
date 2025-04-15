@@ -99,25 +99,10 @@
             @endforelse
         </div>
         
-        <!-- Pagination Section -->
-        @if(isset($jobs) && count($jobs) > 0)
-        <div class="mt-10 flex justify-center">
-            <nav class="inline-flex rounded-md shadow-sm">
-                <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">
-                    Précédent
-                </a>
-                <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600">
-                    1
-                </a>
-                <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-white border border-gray-300 hover:bg-gray-50">
-                    2
-                </a>
-                <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
-                    Suivant
-                </a>
-            </nav>
+        <!-- Laravel Pagination -->
+        <div class="mt-10">
+            {{ $jobs->links('pagination::tailwind') }}
         </div>
-        @endif
     </div>
 </div>
 @endsection

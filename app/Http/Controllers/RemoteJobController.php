@@ -27,7 +27,7 @@ class RemoteJobController extends Controller
                 $totalJobs = count($allJobs);
                 
                 // Handle pagination manually
-                $perPage = 12; // Number of jobs per page
+                $perPage = 21; // Number of jobs per page
                 $currentPage = $request->query('page', 1);
                 
                 // Slice the array to get only the jobs for current page
