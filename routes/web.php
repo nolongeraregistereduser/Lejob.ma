@@ -23,7 +23,8 @@ Route::get('/about', function () {
 
 Route::get('/consultants', [App\Http\Controllers\ConsultantController::class, 'index'])->name('consultants.index');
 
-// User routes (regular users only)
+Route::get('/jobs/remote', [App\Http\Controllers\RemoteJobController::class, 'index'])->name('jobs.remote');
+
 Route::middleware(['auth', 'role:user'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
