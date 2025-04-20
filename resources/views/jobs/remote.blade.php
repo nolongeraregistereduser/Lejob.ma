@@ -1,11 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-12 bg-gradient-to-b from-blue-50 to-white">
+<style>
+    .crafty-font {
+        font-family: 'Crafty Girls', cursive;
+    }
+    body {
+        background-color: white;
+        font-family: 'Quicksand', sans-serif;
+    }
+</style>
+
+<div class="py-12 bg-white font-[Quicksand]">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <!-- French Headline Section -->
         <div class="text-center mb-10">
-            <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Opportunités d'Emploi à Distance</h1>
+            <h1 class="crafty-font text-4xl mb-2">Opportunités d'Emploi à Distance</h1>
             <p class="text-lg text-gray-600 max-w-3xl mx-auto">Découvrez des opportunités professionnelles internationales permettant de travailler depuis n'importe où.</p>
         </div>
         
@@ -83,7 +93,7 @@
                     <!-- Action Footer -->
                     <div class="p-5 pt-0 mt-auto">
                         <a href="{{ $job['url'] ?? '#' }}" target="_blank" 
-                           class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-300">
+                           class="block w-full text-center bg-gray-900 hover:bg-gray-800 text-white font-medium py-2.5 px-4 rounded-full transition-colors">
                             Voir l'offre
                         </a>
                     </div>

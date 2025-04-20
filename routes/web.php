@@ -23,7 +23,7 @@ Route::get('/about', function () {
 
 Route::get('/consultants', [App\Http\Controllers\ConsultantController::class, 'index'])->name('consultants.index');
 
-Route::get('/jobs/remote', [App\Http\Controllers\RemoteJobController::class, 'index'])->name('jobs.remote');
+Route::get('/jobs', [App\Http\Controllers\RemoteJobController::class, 'index'])->name('jobs.remote');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     // Dashboard
@@ -38,10 +38,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         return view('cv.create');
     })->name('cv.create');
     
-    // Jobs
-    Route::get('/jobs', function () {
-        return view('jobs.index');
-    })->name('jobs.index');
     
     // User reservation routes
     Route::prefix('user')->name('user.')->group(function () {
