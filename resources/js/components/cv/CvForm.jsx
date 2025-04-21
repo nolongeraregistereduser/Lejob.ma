@@ -3,11 +3,14 @@ import React from 'react';
 const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    onFormChange(name, value);
+    onFormChange({
+      ...formData,
+      [name]: value
+    });
   };
 
   return (
-    <div className="cv-form">
+    <div className="cv-form bg-white p-6 rounded-lg shadow-lg">
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-4">Choose Template</h2>
         <div className="grid grid-cols-2 gap-4">
@@ -40,7 +43,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
           <input
             type="text"
             name="name"
-            value={formData.name}
+            value={formData.name || ''}
             onChange={handleChange}
             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
@@ -51,7 +54,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
           <input
             type="text"
             name="titre"
-            value={formData.titre}
+            value={formData.titre || ''}
             onChange={handleChange}
             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
@@ -62,7 +65,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
           <input
             type="email"
             name="email"
-            value={formData.email}
+            value={formData.email || ''}
             onChange={handleChange}
             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
@@ -73,7 +76,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
           <input
             type="tel"
             name="phone"
-            value={formData.phone}
+            value={formData.phone || ''}
             onChange={handleChange}
             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
@@ -84,7 +87,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
         <label className="block text-sm font-medium mb-1">Skills</label>
         <textarea
           name="skills"
-          value={formData.skills}
+          value={formData.skills || ''}
           onChange={handleChange}
           className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           rows="3"
@@ -96,7 +99,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
         <label className="block text-sm font-medium mb-1">Work Experience</label>
         <textarea
           name="experience"
-          value={formData.experience}
+          value={formData.experience || ''}
           onChange={handleChange}
           className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           rows="4"
@@ -108,7 +111,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
         <label className="block text-sm font-medium mb-1">Education</label>
         <textarea
           name="education"
-          value={formData.education}
+          value={formData.education || ''}
           onChange={handleChange}
           className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           rows="4"
@@ -120,7 +123,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
         <label className="block text-sm font-medium mb-1">Certifications</label>
         <textarea
           name="certifications"
-          value={formData.certifications}
+          value={formData.certifications || ''}
           onChange={handleChange}
           className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           rows="3"
@@ -132,7 +135,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
         <label className="block text-sm font-medium mb-1">Languages</label>
         <textarea
           name="languages"
-          value={formData.languages}
+          value={formData.languages || ''}
           onChange={handleChange}
           className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           rows="2"
@@ -144,7 +147,7 @@ const CvForm = ({ formData, onFormChange, onTemplateChange, selectedTemplate }) 
         <label className="block text-sm font-medium mb-1">Projects</label>
         <textarea
           name="projects"
-          value={formData.projects}
+          value={formData.projects || ''}
           onChange={handleChange}
           className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           rows="4"

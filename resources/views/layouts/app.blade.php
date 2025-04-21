@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Styles -->
+    @viteReactRefresh
     @vite('resources/css/app.css')
     
     <!-- Additional Styles -->
@@ -49,8 +50,10 @@
     @include('components.footer')
     
     <!-- Scripts -->
+    @viteReactRefresh
     @vite('resources/js/app.js')
     @stack('scripts')
+    @yield('scripts')
 </body>
 </html>
 

@@ -52,6 +52,12 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     });
 });
 
+// CV routes
+Route::middleware(['auth'])->group(function () {
+    Route::resource('cv', App\Http\Controllers\CvController::class);
+    Route::get('/api/cv/current', [App\Http\Controllers\CvController::class, 'getCurrentCv']);
+});
+
 // Consultant routes
 Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'index'])->name('consultant.dashboard');

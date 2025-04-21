@@ -39,8 +39,8 @@ const CvBuilder = () => {
     fetchData();
   }, []);
 
-  const handleFormChange = (name, value) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const handleFormChange = (newData) => {
+    setFormData(newData);
     setSaved(false);
   };
 
@@ -70,8 +70,8 @@ const CvBuilder = () => {
     <div className="cv-builder container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-8">CV Builder</h1>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="lg:w-1/2">
           <CvForm 
             formData={formData} 
             onFormChange={handleFormChange} 
@@ -104,7 +104,7 @@ const CvBuilder = () => {
           )}
         </div>
         
-        <div className="bg-gray-50 rounded-lg shadow-lg overflow-hidden">
+        <div className="lg:w-1/2 sticky top-6 bg-gray-50 rounded-lg shadow-lg overflow-hidden">
           <CvPreview formData={formData} template={selectedTemplate} />
         </div>
       </div>
