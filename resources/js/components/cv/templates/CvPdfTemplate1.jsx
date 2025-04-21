@@ -1,95 +1,69 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
-
-// Register fonts
-Font.register({
-  family: 'Lato',
-  fonts: [
-    { src: 'https://fonts.gstatic.com/s/lato/v23/S6uyw4BMUTPHjx4wXg.ttf', fontWeight: 'normal' },
-    { src: 'https://fonts.gstatic.com/s/lato/v23/S6u9w4BMUTPHh6UVSwiPHA.ttf', fontWeight: 'bold' }
-  ]
-});
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 // Create styles
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Lato',
-    padding: 0,
-    flexDirection: 'row',
-  },
-  sidebar: {
-    width: '30%',
-    backgroundColor: '#1F2937',
-    color: 'white',
-    padding: 20,
-  },
-  main: {
-    width: '70%',
-    padding: 20,
+    padding: 30,
+    fontFamily: 'Helvetica',
   },
   header: {
-    alignItems: 'center',
+    backgroundColor: '#1E40AF',
+    color: 'white',
+    padding: 20,
     marginBottom: 20,
   },
   name: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 24,
     marginBottom: 5,
-    textTransform: 'uppercase',
   },
   title: {
-    fontSize: 14,
-    color: '#D1D5DB',
-    textAlign: 'center',
+    fontSize: 16,
+    marginBottom: 10,
   },
   contactInfo: {
-    fontSize: 10,
-    marginTop: 15,
+    fontSize: 12,
+    marginTop: 5,
   },
   contactItem: {
-    marginBottom: 8,
+    marginBottom: 3,
   },
-  sidebarSection: {
-    marginTop: 25,
-  },
-  mainSection: {
+  section: {
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 16,
     marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    borderBottomStyle: 'solid',
+    borderBottom: '1px solid #1E40AF',
     paddingBottom: 5,
-  },
-  sidebarSectionTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#4B5563',
-    borderBottomStyle: 'solid',
-    paddingBottom: 5,
-  },
-  skill: {
-    fontSize: 10,
-    marginBottom: 6,
   },
   item: {
     marginBottom: 8,
+    fontSize: 11,
+  },
+  skillsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 5,
+  },
+  skill: {
+    backgroundColor: '#DBEAFE',
+    padding: 5,
+    marginRight: 5,
+    marginBottom: 5,
     fontSize: 10,
-  }
+    borderRadius: 3,
+  },
 });
 
-const CvPdfTemplate2 = ({ formData }) => {
-  // Helper function to parse multi-line text into arrays
+// Component
+const CvPdfTemplate1 = ({ formData }) => {
+  // Helper function to parse text into arrays
   const parseTextToArray = (text) => {
-    return text.split(/\r?\n/).filter(item => item.trim() !== '');
+    return text ? text.split(/\r?\n/).filter(item => item.trim() !== '') : [];
   };
 
-  const skills = formData.skills.split(',').map(skill => skill.trim()).filter(skill => skill !== '');
+  const skills = formData.skills ? formData.skills.split(',').map(skill => skill.trim()).filter(skill => skill !== '') : [];
   const experiences = parseTextToArray(formData.experience);
   const education = parseTextToArray(formData.education);
   const certifications = parseTextToArray(formData.certifications);
@@ -99,90 +73,73 @@ const CvPdfTemplate2 = ({ formData }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Sidebar */}
-        <View style={styles.sidebar}>
-          <View style={styles.header}>
-            <Text style={styles.name}>{formData.name || 'Your Name'}</Text>
-            <Text style={styles.title}>{formData.titre || 'Your Job Title'}</Text>
-          </View>
-
+        <View style={styles.header}>
+          <Text style={styles.name}>{formData.name || 'Your Name'}</Text>
+          <Text style={styles.title}>{formData.titre || 'Your Job Title'}</Text>
           <View style={styles.contactInfo}>
             <Text style={styles.contactItem}>{formData.email || 'your.email@example.com'}</Text>
             <Text style={styles.contactItem}>{formData.phone || '+212 6XX-XXXXXX'}</Text>
           </View>
+        </View>
 
-          {skills.length > 0 && (
-            <View style={styles.sidebarSection}>
-              <Text style={styles.sidebarSectionTitle}>Skills</Text>
+        {skills.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Skills</Text>
+            <View style={styles.skillsContainer}>
               {skills.map((skill, index) => (
-                <Text key={index} style={styles.skill}>
-                  • {skill}
-                </Text>
+                <Text key={index} style={styles.skill}>{skill}</Text>
               ))}
             </View>
-          )}
+          </View>
+        )}
 
-          {languages.length > 0 && (
-            <View style={styles.sidebarSection}>
-              <Text style={styles.sidebarSectionTitle}>Languages</Text>
-              {languages.map((lang, index) => (
-                <Text key={index} style={styles.skill}>
-                  • {lang}
-                </Text>
-              ))}
-            </View>
-          )}
+        {experiences.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Experience</Text>
+            {experiences.map((exp, index) => (
+              <Text key={index} style={styles.item}>{exp}</Text>
+            ))}
+          </View>
+        )}
 
-          {certifications.length > 0 && (
-            <View style={styles.sidebarSection}>
-              <Text style={styles.sidebarSectionTitle}>Certifications</Text>
-              {certifications.map((cert, index) => (
-                <Text key={index} style={styles.skill}>
-                  • {cert}
-                </Text>
-              ))}
-            </View>
-          )}
-        </View>
+        {education.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Education</Text>
+            {education.map((edu, index) => (
+              <Text key={index} style={styles.item}>{edu}</Text>
+            ))}
+          </View>
+        )}
 
-        {/* Main Content */}
-        <View style={styles.main}>
-          {experiences.length > 0 && (
-            <View style={styles.mainSection}>
-              <Text style={styles.sectionTitle}>Professional Experience</Text>
-              {experiences.map((exp, index) => (
-                <Text key={index} style={styles.item}>
-                  {exp}
-                </Text>
-              ))}
-            </View>
-          )}
+        {certifications.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Certifications</Text>
+            {certifications.map((cert, index) => (
+              <Text key={index} style={styles.item}>{cert}</Text>
+            ))}
+          </View>
+        )}
 
-          {education.length > 0 && (
-            <View style={styles.mainSection}>
-              <Text style={styles.sectionTitle}>Education</Text>
-              {education.map((edu, index) => (
-                <Text key={index} style={styles.item}>
-                  {edu}
-                </Text>
-              ))}
-            </View>
-          )}
+        {languages.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Languages</Text>
+            {languages.map((lang, index) => (
+              <Text key={index} style={styles.item}>{lang}</Text>
+            ))}
+          </View>
+        )}
 
-          {projects.length > 0 && (
-            <View style={styles.mainSection}>
-              <Text style={styles.sectionTitle}>Projects</Text>
-              {projects.map((proj, index) => (
-                <Text key={index} style={styles.item}>
-                  {proj}
-                </Text>
-              ))}
-            </View>
-          )}
-        </View>
+        {projects.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Projects</Text>
+            {projects.map((proj, index) => (
+              <Text key={index} style={styles.item}>{proj}</Text>
+            ))}
+          </View>
+        )}
       </Page>
     </Document>
   );
 };
 
-export default CvPdfTemplate2;
+export default CvPdfTemplate1;

@@ -64,9 +64,11 @@ const CvBuilder = () => {
   };
 
   const getSelectedPdfTemplate = () => {
-    return selectedTemplate === 'template1' ? 
-      <CvPdfTemplate1 formData={formData} /> : 
-      <CvPdfTemplate2 formData={formData} />;
+    if (selectedTemplate === 'template1') {
+      return <CvPdfTemplate1 formData={formData} />;
+    } else {
+      return <CvPdfTemplate2 formData={formData} />;
+    }
   };
 
   return (
@@ -134,11 +136,16 @@ const CvBuilder = () => {
               </button>
               
               <PDFDownloadLink 
-                document={getSelectedPdfTemplate()} 
-                fileName={`${formData.name.replace(/\s+/g, '_')}_CV.pdf`}
-                className="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-md transition duration-200"
+                key={selectedTemplate}
+                document={getSelectedPdfTemplate()}
+                fileName={`${formData.name.replace(/\s+/g, '_')}_${selectedTemplate === 'template1' ? 'Modern' : 'Classic'}_CV.pdf`}
+                className={`${selectedTemplate === 'template1' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-900'} text-white py-2 px-6 rounded-md transition duration-200`}
               >
-                {({ loading: pdfLoading }) => pdfLoading ? 'Generating PDF...' : 'Download PDF'}
+                {({ loading: pdfLoading }) => 
+                  pdfLoading ? 
+                    'Generating PDF...' : 
+                    `Download ${selectedTemplate === 'template1' ? 'Modern' : 'Classic'} Template`
+                }
               </PDFDownloadLink>
             </div>
             

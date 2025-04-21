@@ -1,95 +1,86 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
-// Register fonts
-Font.register({
-  family: 'Lato',
-  fonts: [
-    { src: 'https://fonts.gstatic.com/s/lato/v23/S6uyw4BMUTPHjx4wXg.ttf', fontWeight: 'normal' },
-    { src: 'https://fonts.gstatic.com/s/lato/v23/S6u9w4BMUTPHh6UVSwiPHA.ttf', fontWeight: 'bold' }
-  ]
-});
-
-// Create styles
+// Create styles for Classic template
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Lato',
-    padding: 0,
     flexDirection: 'row',
+    backgroundColor: 'white',
+    fontFamily: 'Helvetica',
   },
+  // Sidebar styles
   sidebar: {
-    width: '30%',
-    backgroundColor: '#1F2937',
+    width: '35%',
+    backgroundColor: '#1f2937',
     color: 'white',
     padding: 20,
+    height: '100%',
   },
-  main: {
-    width: '70%',
-    padding: 20,
-  },
-  header: {
-    alignItems: 'center',
+  profileSection: {
     marginBottom: 20,
+    paddingBottom: 10,
+    borderBottom: '1px solid #4b5563',
   },
-  name: {
+  profileName: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
-    textTransform: 'uppercase',
   },
-  title: {
+  profileTitle: {
     fontSize: 14,
-    color: '#D1D5DB',
-    textAlign: 'center',
-  },
-  contactInfo: {
-    fontSize: 10,
-    marginTop: 15,
-  },
-  contactItem: {
-    marginBottom: 8,
+    marginBottom: 10,
+    color: '#d1d5db',
   },
   sidebarSection: {
-    marginTop: 25,
-  },
-  mainSection: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    borderBottomStyle: 'solid',
-    paddingBottom: 5,
+    marginBottom: 15,
   },
   sidebarSectionTitle: {
     fontSize: 14,
     fontWeight: 'bold',
+    marginBottom: 8,
+    paddingBottom: 5,
+    borderBottom: '1px solid #4b5563',
+  },
+  contactItem: {
+    fontSize: 10,
+    marginBottom: 5,
+    color: '#d1d5db',
+  },
+  sidebarItem: {
+    fontSize: 10,
+    marginBottom: 5,
+    color: '#d1d5db',
+  },
+  
+  // Main content styles
+  content: {
+    width: '65%',
+    padding: 20,
+  },
+  contentSection: {
+    marginBottom: 20,
+  },
+  contentSectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
     marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#4B5563',
-    borderBottomStyle: 'solid',
+    borderBottom: '1px solid #e5e7eb',
     paddingBottom: 5,
   },
-  skill: {
-    fontSize: 10,
-    marginBottom: 6,
-  },
-  item: {
+  contentItem: {
+    fontSize: 11,
     marginBottom: 8,
-    fontSize: 10,
-  }
+  },
 });
 
+// Component
 const CvPdfTemplate2 = ({ formData }) => {
-  // Helper function to parse multi-line text into arrays
+  // Helper function to parse text into arrays
   const parseTextToArray = (text) => {
-    return text.split(/\r?\n/).filter(item => item.trim() !== '');
+    return text ? text.split(/\r?\n/).filter(item => item.trim() !== '') : [];
   };
 
-  const skills = formData.skills.split(',').map(skill => skill.trim()).filter(skill => skill !== '');
+  const skills = formData.skills ? formData.skills.split(',').map(skill => skill.trim()).filter(skill => skill !== '') : [];
   const experiences = parseTextToArray(formData.experience);
   const education = parseTextToArray(formData.education);
   const certifications = parseTextToArray(formData.certifications);
@@ -101,57 +92,52 @@ const CvPdfTemplate2 = ({ formData }) => {
       <Page size="A4" style={styles.page}>
         {/* Sidebar */}
         <View style={styles.sidebar}>
-          <View style={styles.header}>
-            <Text style={styles.name}>{formData.name || 'Your Name'}</Text>
-            <Text style={styles.title}>{formData.titre || 'Your Job Title'}</Text>
+          <View style={styles.profileSection}>
+            <Text style={styles.profileName}>{formData.name || 'Your Name'}</Text>
+            <Text style={styles.profileTitle}>{formData.titre || 'Your Job Title'}</Text>
           </View>
-
-          <View style={styles.contactInfo}>
+          
+          <View style={styles.sidebarSection}>
+            <Text style={styles.sidebarSectionTitle}>Contact</Text>
             <Text style={styles.contactItem}>{formData.email || 'your.email@example.com'}</Text>
             <Text style={styles.contactItem}>{formData.phone || '+212 6XX-XXXXXX'}</Text>
           </View>
-
+          
           {skills.length > 0 && (
             <View style={styles.sidebarSection}>
               <Text style={styles.sidebarSectionTitle}>Skills</Text>
               {skills.map((skill, index) => (
-                <Text key={index} style={styles.skill}>
-                  • {skill}
-                </Text>
+                <Text key={index} style={styles.sidebarItem}>• {skill}</Text>
               ))}
             </View>
           )}
-
+          
           {languages.length > 0 && (
             <View style={styles.sidebarSection}>
               <Text style={styles.sidebarSectionTitle}>Languages</Text>
               {languages.map((lang, index) => (
-                <Text key={index} style={styles.skill}>
-                  • {lang}
-                </Text>
+                <Text key={index} style={styles.sidebarItem}>• {lang}</Text>
               ))}
             </View>
           )}
-
+          
           {certifications.length > 0 && (
             <View style={styles.sidebarSection}>
               <Text style={styles.sidebarSectionTitle}>Certifications</Text>
               {certifications.map((cert, index) => (
-                <Text key={index} style={styles.skill}>
-                  • {cert}
-                </Text>
+                <Text key={index} style={styles.sidebarItem}>• {cert}</Text>
               ))}
             </View>
           )}
         </View>
-
+        
         {/* Main Content */}
-        <View style={styles.main}>
+        <View style={styles.content}>
           {experiences.length > 0 && (
-            <View style={styles.mainSection}>
-              <Text style={styles.sectionTitle}>Professional Experience</Text>
+            <View style={styles.contentSection}>
+              <Text style={styles.contentSectionTitle}>Professional Experience</Text>
               {experiences.map((exp, index) => (
-                <Text key={index} style={styles.item}>
+                <Text key={index} style={styles.contentItem}>
                   {exp}
                 </Text>
               ))}
@@ -159,10 +145,10 @@ const CvPdfTemplate2 = ({ formData }) => {
           )}
 
           {education.length > 0 && (
-            <View style={styles.mainSection}>
-              <Text style={styles.sectionTitle}>Education</Text>
+            <View style={styles.contentSection}>
+              <Text style={styles.contentSectionTitle}>Education</Text>
               {education.map((edu, index) => (
-                <Text key={index} style={styles.item}>
+                <Text key={index} style={styles.contentItem}>
                   {edu}
                 </Text>
               ))}
@@ -170,10 +156,10 @@ const CvPdfTemplate2 = ({ formData }) => {
           )}
 
           {projects.length > 0 && (
-            <View style={styles.mainSection}>
-              <Text style={styles.sectionTitle}>Projects</Text>
+            <View style={styles.contentSection}>
+              <Text style={styles.contentSectionTitle}>Projects</Text>
               {projects.map((proj, index) => (
-                <Text key={index} style={styles.item}>
+                <Text key={index} style={styles.contentItem}>
                   {proj}
                 </Text>
               ))}
