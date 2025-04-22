@@ -1,7 +1,7 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
-// Create styles
+// Création des styles
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
   },
 });
 
-// Component
+// Composant
 const CvPdfTemplate1 = ({ formData }) => {
-  // Helper function to parse text into arrays
+  // Fonction d'aide pour analyser le texte en tableaux
   const parseTextToArray = (text) => {
     return text ? text.split(/\r?\n/).filter(item => item.trim() !== '') : [];
   };
@@ -74,17 +74,17 @@ const CvPdfTemplate1 = ({ formData }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.name}>{formData.name || 'Your Name'}</Text>
-          <Text style={styles.title}>{formData.titre || 'Your Job Title'}</Text>
+          <Text style={styles.name}>{formData.name || 'Votre Nom'}</Text>
+          <Text style={styles.title}>{formData.titre || 'Votre Poste'}</Text>
           <View style={styles.contactInfo}>
-            <Text style={styles.contactItem}>{formData.email || 'your.email@example.com'}</Text>
+            <Text style={styles.contactItem}>{formData.email || 'votre.email@example.com'}</Text>
             <Text style={styles.contactItem}>{formData.phone || '+212 6XX-XXXXXX'}</Text>
           </View>
         </View>
 
         {skills.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Skills</Text>
+            <Text style={styles.sectionTitle}>Compétences</Text>
             <View style={styles.skillsContainer}>
               {skills.map((skill, index) => (
                 <Text key={index} style={styles.skill}>{skill}</Text>
@@ -95,7 +95,7 @@ const CvPdfTemplate1 = ({ formData }) => {
 
         {experiences.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Experience</Text>
+            <Text style={styles.sectionTitle}>Expérience</Text>
             {experiences.map((exp, index) => (
               <Text key={index} style={styles.item}>{exp}</Text>
             ))}
@@ -104,7 +104,7 @@ const CvPdfTemplate1 = ({ formData }) => {
 
         {education.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Education</Text>
+            <Text style={styles.sectionTitle}>Formation</Text>
             {education.map((edu, index) => (
               <Text key={index} style={styles.item}>{edu}</Text>
             ))}
@@ -122,7 +122,7 @@ const CvPdfTemplate1 = ({ formData }) => {
 
         {languages.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Languages</Text>
+            <Text style={styles.sectionTitle}>Langues</Text>
             {languages.map((lang, index) => (
               <Text key={index} style={styles.item}>{lang}</Text>
             ))}
@@ -131,7 +131,7 @@ const CvPdfTemplate1 = ({ formData }) => {
 
         {projects.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Projects</Text>
+            <Text style={styles.sectionTitle}>Projets</Text>
             {projects.map((proj, index) => (
               <Text key={index} style={styles.item}>{proj}</Text>
             ))}

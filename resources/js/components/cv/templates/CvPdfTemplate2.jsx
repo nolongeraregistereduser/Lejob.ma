@@ -1,14 +1,14 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
-// Create styles for Classic template
+// Création des styles pour le modèle classique
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'row',
     backgroundColor: 'white',
     fontFamily: 'Helvetica',
   },
-  // Sidebar styles
+  // Styles de la barre latérale
   sidebar: {
     width: '35%',
     backgroundColor: '#1f2937',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     color: '#d1d5db',
   },
   
-  // Main content styles
+  // Styles du contenu principal
   content: {
     width: '65%',
     padding: 20,
@@ -73,9 +73,9 @@ const styles = StyleSheet.create({
   },
 });
 
-// Component
+// Composant
 const CvPdfTemplate2 = ({ formData }) => {
-  // Helper function to parse text into arrays
+  // Fonction d'aide pour analyser le texte en tableaux
   const parseTextToArray = (text) => {
     return text ? text.split(/\r?\n/).filter(item => item.trim() !== '') : [];
   };
@@ -90,22 +90,22 @@ const CvPdfTemplate2 = ({ formData }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Sidebar */}
+        {/* Barre latérale */}
         <View style={styles.sidebar}>
           <View style={styles.profileSection}>
-            <Text style={styles.profileName}>{formData.name || 'Your Name'}</Text>
-            <Text style={styles.profileTitle}>{formData.titre || 'Your Job Title'}</Text>
+            <Text style={styles.profileName}>{formData.name || 'Votre Nom'}</Text>
+            <Text style={styles.profileTitle}>{formData.titre || 'Votre Poste'}</Text>
           </View>
           
           <View style={styles.sidebarSection}>
             <Text style={styles.sidebarSectionTitle}>Contact</Text>
-            <Text style={styles.contactItem}>{formData.email || 'your.email@example.com'}</Text>
+            <Text style={styles.contactItem}>{formData.email || 'votre.email@example.com'}</Text>
             <Text style={styles.contactItem}>{formData.phone || '+212 6XX-XXXXXX'}</Text>
           </View>
           
           {skills.length > 0 && (
             <View style={styles.sidebarSection}>
-              <Text style={styles.sidebarSectionTitle}>Skills</Text>
+              <Text style={styles.sidebarSectionTitle}>Compétences</Text>
               {skills.map((skill, index) => (
                 <Text key={index} style={styles.sidebarItem}>• {skill}</Text>
               ))}
@@ -114,7 +114,7 @@ const CvPdfTemplate2 = ({ formData }) => {
           
           {languages.length > 0 && (
             <View style={styles.sidebarSection}>
-              <Text style={styles.sidebarSectionTitle}>Languages</Text>
+              <Text style={styles.sidebarSectionTitle}>Langues</Text>
               {languages.map((lang, index) => (
                 <Text key={index} style={styles.sidebarItem}>• {lang}</Text>
               ))}
@@ -131,37 +131,31 @@ const CvPdfTemplate2 = ({ formData }) => {
           )}
         </View>
         
-        {/* Main Content */}
+        {/* Contenu Principal */}
         <View style={styles.content}>
           {experiences.length > 0 && (
             <View style={styles.contentSection}>
-              <Text style={styles.contentSectionTitle}>Professional Experience</Text>
+              <Text style={styles.contentSectionTitle}>Expérience Professionnelle</Text>
               {experiences.map((exp, index) => (
-                <Text key={index} style={styles.contentItem}>
-                  {exp}
-                </Text>
+                <Text key={index} style={styles.contentItem}>{exp}</Text>
               ))}
             </View>
           )}
-
+          
           {education.length > 0 && (
             <View style={styles.contentSection}>
-              <Text style={styles.contentSectionTitle}>Education</Text>
+              <Text style={styles.contentSectionTitle}>Formation</Text>
               {education.map((edu, index) => (
-                <Text key={index} style={styles.contentItem}>
-                  {edu}
-                </Text>
+                <Text key={index} style={styles.contentItem}>{edu}</Text>
               ))}
             </View>
           )}
-
+          
           {projects.length > 0 && (
             <View style={styles.contentSection}>
-              <Text style={styles.contentSectionTitle}>Projects</Text>
+              <Text style={styles.contentSectionTitle}>Projets</Text>
               {projects.map((proj, index) => (
-                <Text key={index} style={styles.contentItem}>
-                  {proj}
-                </Text>
+                <Text key={index} style={styles.contentItem}>{proj}</Text>
               ))}
             </View>
           )}

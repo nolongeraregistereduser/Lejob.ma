@@ -11,30 +11,30 @@ const CvForm = ({ formData, onFormChange }) => {
 
   return (
     <div className="cv-form">
-      <h2 className="text-2xl font-bold mb-4">CV Details</h2>
+      <h2 className="text-2xl font-bold mb-4">Détails du CV</h2>
       
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Nom Complet</label>
           <input
             type="text"
             name="name"
             value={formData.name || ''}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. Mohammed Alami"
+            placeholder="ex: Mohammed Alami"
           />
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Titre du Poste</label>
           <input
             type="text"
             name="titre"
             value={formData.titre || ''}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. Full Stack Developer"
+            placeholder="ex: Développeur Full Stack"
           />
         </div>
         
@@ -47,39 +47,39 @@ const CvForm = ({ formData, onFormChange }) => {
               value={formData.email || ''}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="e.g. yourname@example.com"
+              placeholder="ex: votrenom@example.com"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
             <input
               type="text"
               name="phone"
               value={formData.phone || ''}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="e.g. +212 612-345678"
+              placeholder="ex: +212 612-345678"
             />
           </div>
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Skills (comma separated)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Compétences (séparées par des virgules)</label>
           <textarea
             name="skills"
             value={formData.skills || ''}
             onChange={handleChange}
             rows="2"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. JavaScript, React, Laravel, MySQL"
+            placeholder="ex: JavaScript, React, Laravel, MySQL"
           ></textarea>
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Work Experience 
-            <span className="text-gray-500 text-xs ml-1">(one entry per line)</span>
+            Expérience Professionnelle
+            <span className="text-gray-500 text-xs ml-1">(une entrée par ligne)</span>
           </label>
           <textarea
             name="experience"
@@ -87,14 +87,14 @@ const CvForm = ({ formData, onFormChange }) => {
             onChange={handleChange}
             rows="4"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Company | Position | Date | Description"
+            placeholder="Entreprise | Poste | Date | Description"
           ></textarea>
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Education
-            <span className="text-gray-500 text-xs ml-1">(one entry per line)</span>
+            Formation
+            <span className="text-gray-500 text-xs ml-1">(une entrée par ligne)</span>
           </label>
           <textarea
             name="education"
@@ -102,14 +102,14 @@ const CvForm = ({ formData, onFormChange }) => {
             onChange={handleChange}
             rows="3"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Institution | Degree | Date | Description"
+            placeholder="Établissement | Diplôme | Date | Description"
           ></textarea>
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Certifications
-            <span className="text-gray-500 text-xs ml-1">(one entry per line)</span>
+            <span className="text-gray-500 text-xs ml-1">(une entrée par ligne)</span>
           </label>
           <textarea
             name="certifications"
@@ -117,14 +117,14 @@ const CvForm = ({ formData, onFormChange }) => {
             onChange={handleChange}
             rows="2"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Certification | Issuer | Date"
+            placeholder="Certification | Émetteur | Date"
           ></textarea>
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Languages
-            <span className="text-gray-500 text-xs ml-1">(one entry per line)</span>
+            Langues
+            <span className="text-gray-500 text-xs ml-1">(une entrée par ligne)</span>
           </label>
           <textarea
             name="languages"
@@ -132,14 +132,14 @@ const CvForm = ({ formData, onFormChange }) => {
             onChange={handleChange}
             rows="2"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Language (Proficiency Level)"
+            placeholder="Langue (Niveau de Compétence)"
           ></textarea>
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Projects
-            <span className="text-gray-500 text-xs ml-1">(one entry per line)</span>
+            Projets
+            <span className="text-gray-500 text-xs ml-1">(une entrée par ligne)</span>
           </label>
           <textarea
             name="projects"
@@ -147,7 +147,7 @@ const CvForm = ({ formData, onFormChange }) => {
             onChange={handleChange}
             rows="3"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Project Name | Description | Technologies"
+            placeholder="Nom du Projet | Description | Technologies"
           ></textarea>
         </div>
       </div>

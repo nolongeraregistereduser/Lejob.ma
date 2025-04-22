@@ -7,18 +7,18 @@ import CvPdfTemplate1 from './templates/CvPdfTemplate1';
 import CvPdfTemplate2 from './templates/CvPdfTemplate2';
 
 const CvBuilder = () => {
-  // Sample data for initial full preview
+  // Données initiales pour l'aperçu complet
   const initialData = {
     name: 'Jamal Benkirane',
-    titre: 'Full Stack Developer',
+    titre: 'Développeur Full Stack',
     email: 'jamal.benkirane@example.com',
     phone: '+212 612-345678',
-    education: 'ENSIAS | Master in Computer Science | 2019-2021\nUniversité Mohammed V | Bachelor in Computer Engineering | 2015-2019',
-    experience: 'TechMaroc | Senior Developer | 2021-Present | Led team of 5 developers on e-commerce platform\nKinani Solutions | Junior Developer | 2019-2021 | Developed and maintained client websites',
+    education: 'ENSIAS | Master en Informatique | 2019-2021\nUniversité Mohammed V | Licence en Génie Informatique | 2015-2019',
+    experience: 'TechMaroc | Développeur Senior | 2021-Présent | Dirigé une équipe de 5 développeurs sur plateforme e-commerce\nKinani Solutions | Développeur Junior | 2019-2021 | Développé et maintenu des sites web clients',
     skills: 'JavaScript, PHP, Laravel, React, MySQL, Docker, AWS, Git',
-    certifications: 'AWS Certified Developer | AWS | 2022\nLaravel Certification | Laravel | 2021',
-    languages: 'Arabic (Native), French (Fluent), English (Professional)',
-    projects: 'E-commerce Platform | Full-stack marketplace with payment integration | React, Laravel, MySQL\nHealthcare App | Mobile app for medical appointments | React Native, Firebase',
+    certifications: 'AWS Certified Developer | AWS | 2022\nCertification Laravel | Laravel | 2021',
+    languages: 'Arabe (Natif), Français (Courant), Anglais (Professionnel)',
+    projects: 'Plateforme E-commerce | Marketplace full-stack avec intégration paiement | React, Laravel, MySQL\nApplication Santé | Application mobile pour rendez-vous médicaux | React Native, Firebase',
   };
   
   const [formData, setFormData] = useState(initialData);
@@ -73,16 +73,16 @@ const CvBuilder = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Template Selection */}
+      {/* Sélection du Modèle */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Choose a Template</h2>
+        <h2 className="text-2xl font-bold mb-4">Choisir un Modèle</h2>
         <div className="flex flex-wrap gap-6">
           <div 
             className={`w-48 cursor-pointer transition-all duration-200 ${selectedTemplate === 'template1' ? 'ring-4 ring-blue-500' : 'hover:shadow-lg'}`}
             onClick={() => handleTemplateChange('template1')}
           >
             <div className="bg-blue-600 text-white p-3 text-center font-bold rounded-t-lg">
-              Modern Template
+              Modèle Moderne
             </div>
             <div className="bg-white border-2 border-t-0 border-gray-300 p-3 h-32 rounded-b-lg">
               <div className="bg-blue-100 h-4 w-full mb-2 rounded"></div>
@@ -101,7 +101,7 @@ const CvBuilder = () => {
             onClick={() => handleTemplateChange('template2')}
           >
             <div className="bg-gray-800 text-white p-3 text-center font-bold rounded-t-lg">
-              Classic Template
+              Modèle Classique
             </div>
             <div className="bg-white border-2 border-t-0 border-gray-300 p-3 h-32 rounded-b-lg flex">
               <div className="bg-gray-800 w-1/3 h-full mr-2 rounded"></div>
@@ -132,26 +132,26 @@ const CvBuilder = () => {
                 disabled={loading}
                 className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md transition duration-200 disabled:opacity-50"
               >
-                {loading ? 'Saving...' : 'Save CV'}
+                {loading ? 'Enregistrement...' : 'Enregistrer CV'}
               </button>
               
               <PDFDownloadLink 
                 key={selectedTemplate}
                 document={getSelectedPdfTemplate()}
-                fileName={`${formData.name.replace(/\s+/g, '_')}_${selectedTemplate === 'template1' ? 'Modern' : 'Classic'}_CV.pdf`}
+                fileName={`${formData.name.replace(/\s+/g, '_')}_${selectedTemplate === 'template1' ? 'Moderne' : 'Classique'}_CV.pdf`}
                 className={`${selectedTemplate === 'template1' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-900'} text-white py-2 px-6 rounded-md transition duration-200`}
               >
                 {({ loading: pdfLoading }) => 
                   pdfLoading ? 
-                    'Generating PDF...' : 
-                    `Download ${selectedTemplate === 'template1' ? 'Modern' : 'Classic'} Template`
+                    'Génération PDF...' : 
+                    `Télécharger ${selectedTemplate === 'template1' ? 'Modèle Moderne' : 'Modèle Classique'}`
                 }
               </PDFDownloadLink>
             </div>
             
             {saved && (
               <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-md">
-                CV saved successfully!
+                CV enregistré avec succès !
               </div>
             )}
           </div>
@@ -160,7 +160,7 @@ const CvBuilder = () => {
         {/* Preview Section - Fixed 60% width */}
         <div style={{ width: '60%', flexShrink: 0 }}>
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Live Preview</h2>
+            <h2 className="text-2xl font-bold mb-4">Aperçu en Direct</h2>
             <div className="bg-gray-50 p-4 border border-gray-200 rounded-lg">
               <CvPreview 
                 template={selectedTemplate} 
