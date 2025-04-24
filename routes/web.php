@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\user\ProfileController;
+use App\Http\Controllers\CvController;
 
 // Public routes
 Route::get('/', function () {
@@ -52,11 +53,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     });
 });
 
-// CV routes
-Route::middleware(['auth'])->group(function () {
-    Route::resource('cv', App\Http\Controllers\CvController::class);
-    Route::get('/api/cv/current', [App\Http\Controllers\CvController::class, 'getCurrentCv']);
-});
+// CV specific routes - no auth middleware temporarily
+Route::get('/api/cv/current', [CvController::class, 'getCurrentCv']);
+Route::post('/api/cv/upload-pdf', [CvController::class, 'uploadPdf']);
 
 // Consultant routes
 Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(function () {

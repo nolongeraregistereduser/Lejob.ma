@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CvForm from './CvForm';
 import CvPreview from './CvPreview';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
 import CvPdfTemplate1 from './templates/CvPdfTemplate1';
 import CvPdfTemplate2 from './templates/CvPdfTemplate2';
 
@@ -25,17 +25,20 @@ const CvBuilder = () => {
   const [selectedTemplate, setSelectedTemplate] = useState('template1');
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Load user data if editing an existing CV
     const fetchData = async () => {
       try {
+        // Add /api prefix here
         const response = await axios.get('/api/cv/current');
         if (response.data) {
           setFormData(response.data);
         }
       } catch (error) {
-        console.error('Error fetching CV data', error);
+        console.log('No existing CV found or error fetching data');
+        // Use initial data if there's no existing CV
       }
     };
     fetchData();
@@ -50,24 +53,60 @@ const CvBuilder = () => {
     setSelectedTemplate(template);
   };
 
-  const handleSave = async () => {
-    setLoading(true);
-    try {
-      await axios.post('/api/cv', formData);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000); // Hide message after 3 seconds
-    } catch (error) {
-      console.error('Error saving CV', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const getSelectedPdfTemplate = () => {
     if (selectedTemplate === 'template1') {
       return <CvPdfTemplate1 formData={formData} />;
     } else {
       return <CvPdfTemplate2 formData={formData} />;
+    }
+  };
+
+  // Combined function to save and download CV
+  const handleSaveAndDownload = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // 1. Generate PDF blob
+      const pdfBlob = await pdf(getSelectedPdfTemplate()).toBlob();
+      
+      // 2. Create a download for the user
+      const fileName = `${formData.name.replace(/\s+/g, '_')}_${selectedTemplate === 'template1' ? 'Moderne' : 'Classique'}_CV.pdf`;
+      const url = URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      // 3. Save to server
+      const formDataToSend = new FormData();
+      
+      // Add PDF file to form data
+      formDataToSend.append('cv_file', new File([pdfBlob], fileName, { type: 'application/pdf' }));
+      
+      // Add all CV data fields
+      Object.keys(formData).forEach(key => {
+        formDataToSend.append(key, formData[key]);
+      });
+      
+      // Send to server
+      // Add /api prefix here
+      const response = await axios.post('/api/cv/upload-pdf', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+      });
+      
+      setSaved(true);
+      setTimeout(() => setSaved(false), 5000); // Hide success message after 5 seconds
+    } catch (error) {
+      console.error('Error saving and downloading CV', error);
+      setError('Une erreur est survenue. Veuillez réessayer.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -126,32 +165,37 @@ const CvBuilder = () => {
               onFormChange={handleFormChange}
             />
             
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8">
               <button 
-                onClick={handleSave}
+                onClick={handleSaveAndDownload}
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md transition duration-200 disabled:opacity-50"
+                className={`${selectedTemplate === 'template1' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-900'} text-white py-3 px-6 rounded-md transition duration-200 disabled:opacity-50 w-full flex justify-center items-center`}
               >
-                {loading ? 'Enregistrement...' : 'Enregistrer CV'}
+                {loading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Traitement en cours...
+                  </>
+                ) : (
+                  <>
+                    Télécharger et Enregistrer CV
+                  </>
+                )}
               </button>
-              
-              <PDFDownloadLink 
-                key={selectedTemplate}
-                document={getSelectedPdfTemplate()}
-                fileName={`${formData.name.replace(/\s+/g, '_')}_${selectedTemplate === 'template1' ? 'Moderne' : 'Classique'}_CV.pdf`}
-                className={`${selectedTemplate === 'template1' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-900'} text-white py-2 px-6 rounded-md transition duration-200`}
-              >
-                {({ loading: pdfLoading }) => 
-                  pdfLoading ? 
-                    'Génération PDF...' : 
-                    `Télécharger ${selectedTemplate === 'template1' ? 'Modèle Moderne' : 'Modèle Classique'}`
-                }
-              </PDFDownloadLink>
             </div>
             
             {saved && (
               <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-md">
-                CV enregistré avec succès !
+                CV téléchargé et enregistré avec succès !
+              </div>
+            )}
+            
+            {error && (
+              <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
+                {error}
               </div>
             )}
           </div>
