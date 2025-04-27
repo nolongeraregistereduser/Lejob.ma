@@ -237,8 +237,6 @@ class CvController extends Controller
                 'cv' => $cv
             ]);
         } catch (\Exception $e) {
-            // Log the error for debugging
-            \Log::error('CV upload error: ' . $e->getMessage());
             
             return response()->json([
                 'success' => false,

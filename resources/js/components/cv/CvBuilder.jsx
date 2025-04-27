@@ -80,7 +80,7 @@ const CvBuilder = () => {
       a.click();
       document.body.removeChild(a);
       
-      // 3. Save to server
+      // Save to server
       const formDataToSend = new FormData();
       
       // Add PDF file to form data
@@ -91,8 +91,7 @@ const CvBuilder = () => {
         formDataToSend.append(key, formData[key]);
       });
       
-      // Send to server
-      // Add /api prefix here
+
       const response = await axios.post('/api/cv/upload-pdf', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -101,7 +100,7 @@ const CvBuilder = () => {
       });
       
       setSaved(true);
-      setTimeout(() => setSaved(false), 5000); // Hide success message after 5 seconds
+      setTimeout(() => setSaved(false), 8000); // Hide success message after 8 dial seconds
     } catch (error) {
       console.error('Error saving and downloading CV', error);
       setError('Une erreur est survenue. Veuillez réessayer.');

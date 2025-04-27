@@ -42,7 +42,7 @@
                 <span class="text-gray-500">Interviews</span>
             </div>
         </div>
-        <a href="{{ route('jobs.index') }}" class="block text-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+        <a href="" class="block text-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
             Find Jobs
         </a>
     </div>
@@ -68,7 +68,7 @@
     <div class="md:col-span-2 lg:col-span-3 bg-white p-6 rounded-lg shadow-sm">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-semibold">Recent Job Opportunities</h3>
-            <a href="{{ route('jobs.index') }}" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">View All</a>
+            <a href="" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">View All</a>
         </div>
         
         <div class="border-t border-gray-200 divide-y divide-gray-200">
