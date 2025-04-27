@@ -102,16 +102,34 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class, 'user_id');
     }
 
-    /**
-     * Obtenir les feedbacks reçus par ce consultant
-     */
+    
+     //Obtenir les feedbacks reçus par ce consultant
+     
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class, 'consultant_id');
 
     }
 
+    
+    //  Get the availabilities where the user is a consultant
+     
+    public function availabilities()
+    {
+        return $this->hasMany(ConsultantAvailability::class, 'consultant_id');
+    }
 
+    
+     // Get available time slots (not yet booked)
+    
+    public function availableTimeSlots()
+    {
+        return $this->availabilities()
+            ->where('date', '>=', now()->toDateString())
+            ->where('is_booked', false)
+            ->orderBy('date')
+            ->orderBy('start_time');
+    }
 
     public function cvs()
     {

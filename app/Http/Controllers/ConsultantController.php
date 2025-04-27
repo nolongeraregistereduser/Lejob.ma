@@ -37,5 +37,20 @@ class ConsultantController extends Controller
 
         return view('consultants.index', compact('consultants'));
     }
+
+    public function show($id)
+    {
+        $consultant = User::where('id', $id)
+            ->where('role', 'consultant')
+            ->where('status', 'active')
+            ->with(['availableTimeSlots', 'feedbacks' => function($query) {
+                $query->latest()->limit(3);
+            }])
+            ->firstOrFail();
+            
+        $averageRating = $consultant->feedbacks->avg('rating') ?? 0;
+        
+        return view('consultants.show', compact('consultant', 'averageRating'));
+    }
 }
 
