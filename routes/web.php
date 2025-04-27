@@ -23,6 +23,7 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/consultants', [App\Http\Controllers\ConsultantController::class, 'index'])->name('consultants.index');
+Route::get('/consultants/{id}', [App\Http\Controllers\ConsultantController::class, 'show'])->name('consultants.show');
 
 Route::get('/jobs', [App\Http\Controllers\RemoteJobController::class, 'index'])->name('jobs.remote');
 
@@ -39,6 +40,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         return view('cv.create');
     })->name('cv.create');
     
+    // Add this route for direct booking
+    Route::post('/book-session', [\App\Http\Controllers\user\ReservationController::class, 'bookSession'])->name('user.book-session');
     
     // User reservation routes
     Route::prefix('user')->name('user.')->group(function () {
@@ -70,6 +73,13 @@ Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(func
     // Profile routes
     Route::get('/profile', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'show'])->name('consultant.profile');
     Route::post('/profile/update', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'update'])->name('consultant.profile.update');
+});
+
+Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->name('consultant.')->group(function () {
+    Route::get('/availability', [App\Http\Controllers\Consultant\AvailabilityController::class, 'index'])->name('availability.index');
+    Route::get('/availability/create', [App\Http\Controllers\Consultant\AvailabilityController::class, 'create'])->name('availability.create');
+    Route::post('/availability', [App\Http\Controllers\Consultant\AvailabilityController::class, 'store'])->name('availability.store');
+    Route::delete('/availability/{availability}', [App\Http\Controllers\Consultant\AvailabilityController::class, 'destroy'])->name('availability.destroy');
 });
 
 // Admin routes
