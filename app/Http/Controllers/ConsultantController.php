@@ -38,8 +38,12 @@ class ConsultantController extends Controller
         return view('consultants.index', compact('consultants'));
     }
 
+    /**
+     * Display consultant profile with availability slots
+     */
     public function show($id)
     {
+        // Get consultant data with feedback relationship
         $consultant = User::where('id', $id)
             ->where('role', 'consultant')
             ->where('status', 'active')
@@ -48,6 +52,7 @@ class ConsultantController extends Controller
             }])
             ->firstOrFail();
             
+        // Calculate average rating
         $averageRating = $consultant->feedbacks->avg('rating') ?? 0;
         
         return view('consultants.show', compact('consultant', 'averageRating'));
