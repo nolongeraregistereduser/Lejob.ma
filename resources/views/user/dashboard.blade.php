@@ -59,7 +59,7 @@
         <div class="mb-4">
             <p class="text-sm text-gray-500">No upcoming consultations</p>
         </div>
-        <a href="#" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+        <a href="{{ route('consultants.index') }}" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
             Book Consultation
         </a>
     </div>
