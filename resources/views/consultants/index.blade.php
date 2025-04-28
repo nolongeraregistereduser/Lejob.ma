@@ -113,8 +113,10 @@
                     
                     <!-- Action Footer -->
                     <div class="p-5 pt-0 mt-auto">
-                        <a href="{{ route('consultants.show', $consultant->id) }}" class="btn btn-primary">
-                            Voir détails et réserver
+                        <a href="{{ route('consultants.show', $consultant->id) }}" class="btn btn-primary position-relative d-flex align-items-center justify-content-center gap-2 px-3 py-2">
+                            <i class="fas fa-user-check"></i>
+                            <span>Voir détails et réserver</span>
+                            <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
                 </div>
