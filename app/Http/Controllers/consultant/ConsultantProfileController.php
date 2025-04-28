@@ -34,8 +34,10 @@ class ConsultantProfileController extends Controller
             'city' => 'nullable|string|max:100',
             'country' => 'nullable|string|max:100',
             'profile_picture' => 'nullable|image|max:2048',
+            'hourly_rate' => 'nullable|numeric|min:0',
         ]);
         
+
         // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
             // Delete old profile picture if exists
@@ -48,6 +50,7 @@ class ConsultantProfileController extends Controller
             $validated['profile_picture'] = $path;
         }
         
+        $user->hourly_rate = $request->hourly_rate;
         $user->update($validated);
         
         return redirect()->route('consultant.profile')->with('success', 'Profil mis à jour avec succès');
