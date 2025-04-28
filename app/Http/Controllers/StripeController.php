@@ -71,12 +71,13 @@ class StripeController extends Controller
             'consultant_id' => $request->consultant_id,
             'date' => $request->date,
             'time_slot' => $request->time_slot,
-            'status' => 'confirmed', // Automatically confirm since payment was made
+            'status' => 'pending', // Manually confirm wakha payment is made but consultant should confirm the reservation
+            'payment_status' => 'paid',
             'notes' => $request->notes,
         ]);
         
         $reservation->save();
-        
+        // dd($reservation);
         return redirect()->route('user.reservations.index')
             ->with('success', 'Votre rendez-vous a été réservé avec succès !');
     }

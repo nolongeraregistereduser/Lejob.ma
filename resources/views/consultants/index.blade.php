@@ -113,10 +113,11 @@
                     
                     <!-- Action Footer -->
                     <div class="p-5 pt-0 mt-auto">
-                        <a href="{{ route('consultants.show', $consultant->id) }}" class="btn btn-primary position-relative d-flex align-items-center justify-content-center gap-2 px-3 py-2">
-                            <i class="fas fa-user-check"></i>
-                            <span>Voir détails et réserver</span>
-                            <i class="fas fa-arrow-right ms-1"></i>
+                        <a href="{{ route('consultants.show', $consultant->id) }}" class="inline-flex items-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-gray-900 hover:bg-gray-800 hover:-translate-y-0.5 transform transition-all duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Voir détails et réserver
                         </a>
                     </div>
                 </div>
