@@ -113,9 +113,8 @@
                     
                     <!-- Action Footer -->
                     <div class="p-5 pt-0 mt-auto">
-                        <a href="{{ route('user.reservations.create', ['consultant_id' => $consultant->id]) }}" 
-                           class="block w-full text-center bg-gray-900 hover:bg-gray-800 text-white font-medium py-2.5 px-4 rounded-full transition-colors duration-300">
-                            Prendre rendez-vous
+                        <a href="{{ route('consultants.show', $consultant->id) }}" class="btn btn-primary">
+                            Voir détails et réserver
                         </a>
                     </div>
                 </div>

@@ -23,6 +23,7 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/consultants', [App\Http\Controllers\ConsultantController::class, 'index'])->name('consultants.index');
+Route::get('/consultants/{id}', [App\Http\Controllers\ConsultantController::class, 'show'])->name('consultants.show');
 
 Route::get('/jobs', [App\Http\Controllers\RemoteJobController::class, 'index'])->name('jobs.remote');
 
@@ -56,6 +57,10 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 // CV specific routes - no auth middleware temporarily
 Route::get('/api/cv/current', [CvController::class, 'getCurrentCv']);
 Route::post('/api/cv/upload-pdf', [CvController::class, 'uploadPdf']);
+
+// Stripe routes
+Route::post('/checkout', [App\Http\Controllers\StripeController::class, 'checkout'])->name('stripe.checkout')->middleware('auth');
+Route::get('/payment/success', [App\Http\Controllers\StripeController::class, 'success'])->name('stripe.success')->middleware('auth');
 
 // Consultant routes
 Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(function () {
