@@ -12,12 +12,12 @@ LeJob.ma est une plateforme innovante dédiée au recrutement et à l'insertion 
 - Faciliter la création de CV professionnels et ATS-friendly
 - Connecter les chercheurs d'emploi avec les opportunités du marché
 - Permettre l'accès à des consultants en carrière pour du coaching
-- Simplifier le processus de recrutement pour les entreprises
+- Simplifier le processus de recrutement pour les chercheurs d'emplois.
 
 ### La cible adressée par le site
 
 - Chercheurs d'emploi (Fresh graduates, professionnels)
-- Recruteurs/Entreprises
+- Recruteurs/Entreprises ( API fetchig les offres d'emplois pour cette version)
 - Consultants/Coaches en carrière
 
 ### Périmètre du projet
@@ -55,16 +55,14 @@ Pages principales :
 - Prévisualisation en temps réel (Non-prioritaire)
 
 **2. Gestion des offres d'emploi**
-- Publication d'offres
+- Offres d'emplois remote via remotive API.
 - Recherche avancée
 - Filtrage par catégorie/location/type
-- Candidature par mail (candidature direct if i still have time)
 
 
 **3. Système de Booking**
 - Réservation de sessions avec des consultants
-- Gestion du calendrier
-- Système de paiement (In next version)
+- Système de paiement (Stripe)
 - Feedback et évaluation
 
 ### Technologies utilisées
@@ -73,7 +71,7 @@ Frontend:
 - HTML/CSS
 - JavaScript/React
 - React-PDF pour la génération de CV
-- Bootstrap ou Tailwind pour le design responsive
+- Tailwind pour le design responsive
 
 Backend:
 - PHP/Laravel
@@ -88,15 +86,11 @@ Backend:
 - Je peux rechercher et postuler aux offres d'emploi
 - Je peux réserver des sessions avec des consultants
 
-**Recruteur**
-- Les fonctionalité du chercher d'emploi
-- Je peux publier et gérer des offres d'emploi
 
 **Consultant**
 - Je peux créer mon profil de consultant
-- Je peux gérer mon calendrier de disponibilité
 - Je peux gérer mes réservations
-- Je peux communiquer avec mes clients
+- Je peux communiquer avec mes clients ( Via Mail)
 
 **Admin**
 - Je peux gérer tous les utilisateurs
@@ -117,13 +111,12 @@ Backend:
 - Système d'export et de sauvegarde des CV
 
 ### Epic 3: Gestion des offres
-- Système de publication et gestion des offres d'emploi
+- Système de publication et gestion des offres d'emploi (Remotive API)
 - Mise en place du système de recherche et filtrage
-- Gestion des candidatures
 
 ### Epic 4: Système de Booking
 - Mise en place du système de réservation
-- Gestion des calendriers et disponibilités
+- Integration du Paiment via Stripe
 - Système de feedback
 
 ### Epic 5: Admin Dashboard
