@@ -100,6 +100,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/interviews/{id}', [App\Http\Controllers\Admin\InterviewsController::class, 'show'])->name('interviews.show');
     Route::patch('/interviews/{id}/status', [App\Http\Controllers\Admin\InterviewsController::class, 'updateStatus'])->name('interviews.update-status');
     Route::delete('/interviews/{id}', [App\Http\Controllers\Admin\InterviewsController::class, 'destroy'])->name('interviews.destroy');
+    
+    // Feedback management routes
+    Route::get('/feedback', [App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('feedback.index');
+    Route::get('/feedback/{id}', [App\Http\Controllers\Admin\FeedbackController::class, 'show'])->name('feedback.show');
+    Route::delete('/feedback/{id}', [App\Http\Controllers\Admin\FeedbackController::class, 'destroy'])->name('feedback.destroy');
 });
 
 
