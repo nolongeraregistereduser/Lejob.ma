@@ -96,4 +96,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/statistics', [App\Http\Controllers\Admin\StatisticsController::class, 'index'])->name('admin.statistics');
 });
 
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    // Interview (Reservation) management routes
+    Route::get('/interviews', [App\Http\Controllers\Admin\InterviewsController::class, 'index'])->name('interviews.index');
+    Route::get('/interviews/dashboard', [App\Http\Controllers\Admin\InterviewsController::class, 'dashboard'])->name('interviews.dashboard');
+    Route::get('/interviews/{id}', [App\Http\Controllers\Admin\InterviewsController::class, 'show'])->name('interviews.show');
+    Route::patch('/interviews/{id}/status', [App\Http\Controllers\Admin\InterviewsController::class, 'updateStatus'])->name('interviews.update-status');
+    Route::delete('/interviews/{id}', [App\Http\Controllers\Admin\InterviewsController::class, 'destroy'])->name('interviews.destroy');
+});
+
 
