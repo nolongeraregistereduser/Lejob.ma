@@ -77,26 +77,23 @@ Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(func
     Route::post('/profile/update', [App\Http\Controllers\Consultant\ConsultantProfileController::class, 'update'])->name('consultant.profile.update');
 });
 
-// Admin routes
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+// Admin routes - CONSOLIDATED GROUP
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
-    })->name('admin.dashboard');
+    })->name('dashboard');
 
     // User management
-    Route::get('/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('admin.users');
-    Route::post('/users/{id}/approve', [App\Http\Controllers\Admin\UserManagementController::class, 'approve'])->name('admin.users.approve');
-    Route::post('/users/{id}/reject', [App\Http\Controllers\Admin\UserManagementController::class, 'reject'])->name('admin.users.reject');
-    Route::post('/users/{id}/activate', [App\Http\Controllers\Admin\UserManagementController::class, 'activate'])->name('admin.users.activate');
-    Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'delete'])->name('admin.users.delete');
+    Route::get('/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('users');
+    Route::post('/users/{id}/approve', [App\Http\Controllers\Admin\UserManagementController::class, 'approve'])->name('users.approve');
+    Route::post('/users/{id}/reject', [App\Http\Controllers\Admin\UserManagementController::class, 'reject'])->name('users.reject');
+    Route::post('/users/{id}/activate', [App\Http\Controllers\Admin\UserManagementController::class, 'activate'])->name('users.activate');
+    Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'delete'])->name('users.delete');
 
     // Other admin routes
-    Route::get('/jobs', [App\Http\Controllers\Admin\JobsController::class, 'index'])->name('admin.jobs');
-    Route::get('/interviews', [App\Http\Controllers\Admin\InterviewsController::class, 'index'])->name('admin.interviews');
-    Route::get('/statistics', [App\Http\Controllers\Admin\StatisticsController::class, 'index'])->name('admin.statistics');
-});
-
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/jobs', [App\Http\Controllers\Admin\JobsController::class, 'index'])->name('jobs');
+    Route::get('/statistics', [App\Http\Controllers\Admin\StatisticsController::class, 'index'])->name('statistics');
+    
     // Interview (Reservation) management routes
     Route::get('/interviews', [App\Http\Controllers\Admin\InterviewsController::class, 'index'])->name('interviews.index');
     Route::get('/interviews/dashboard', [App\Http\Controllers\Admin\InterviewsController::class, 'dashboard'])->name('interviews.dashboard');

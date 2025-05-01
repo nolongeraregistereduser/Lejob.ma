@@ -10,15 +10,34 @@
         .crafty-font {
             font-family: 'Crafty Girls', cursive;
         }
+        
+        /* Fix the layout with these rules */
+        .admin-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        .admin-content {
+            flex: 1;
+            margin-left: 16rem; /* Exactly match the sidebar width (w-64 = 16rem) */
+        }
+        
+        @media (max-width: 768px) {
+            .admin-content {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 <body class="font-[Quicksand] bg-gray-50">
-    <div class="min-h-screen flex">
-        <!-- Sidebar -->
+    <!-- Use the admin-container class here -->
+    <div class="admin-container">
+        <!-- Sidebar - No changes needed to the sidebar include -->
         @include('components.admin.sidebar')
-
-        <!-- Main Content -->
-        <div class="flex-1 ml-64">
+        
+        <!-- Main Content - Add admin-content class -->
+        <div class="admin-content">
             <!-- Top Navigation -->
             <div class="bg-white shadow px-4 py-2">
                 <div class="flex items-center justify-between">

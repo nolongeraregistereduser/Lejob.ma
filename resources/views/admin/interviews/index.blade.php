@@ -53,4 +53,106 @@
                 </div>
                 
                 <div>
-                    <label for="consultant" class="block text
+                    <label for="consultant" class="block text-sm font-medium text-gray-700 mb-1">Consultant</label>
+                    <select id="consultant" name="consultant" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Tous les consultants</option>
+                        @foreach($consultants as $consultant)
+                            <option value="{{ $consultant->id }}" {{ request('consultant') == $consultant->id ? 'selected' : '' }}>
+                                {{ $consultant->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Date de début</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                
+                <div>
+                    <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Date de fin</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="flex-grow">
+                    <input type="text" name="search" id="search" placeholder="Rechercher par nom du client ou consultant" value="{{ request('search') }}" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                        Filtrer
+                    </button>
+                    <a href="{{ route('admin.interviews.index') }}" class="ml-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        Réinitialiser
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Reservations Table -->
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Consultant</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Heure</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse ($reservations as $reservation)
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ $reservation->id }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ $reservation->user->name }}</div>
+                        <div class="text-sm text-gray-500">{{ $reservation->user->email }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ $reservation->consultant->name }}</div>
+                        <div class="text-sm text-gray-500">{{ $reservation->consultant->email }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ \Carbon\Carbon::parse($reservation->date)->format('d/m/Y') }}</div>
+                        <div class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($reservation->time_slot)->format('H:i') }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            @if($reservation->status == 'pending') bg-yellow-100 text-yellow-800 @endif
+                            @if($reservation->status == 'confirmed') bg-blue-100 text-blue-800 @endif
+                            @if($reservation->status == 'completed') bg-green-100 text-green-800 @endif
+                            @if($reservation->status == 'cancelled') bg-red-100 text-red-800 @endif
+                        ">
+                            @if($reservation->status == 'pending') En attente @endif
+                            @if($reservation->status == 'confirmed') Confirmée @endif
+                            @if($reservation->status == 'completed') Terminée @endif
+                            @if($reservation->status == 'cancelled') Annulée @endif
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="{{ route('admin.interviews.show', $reservation->id) }}" class="text-blue-600 hover:text-blue-900">Détails</a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                        Aucune réservation trouvée.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="mt-4">
+        {{ $reservations->withQueryString()->links() }}
+    </div>
+</div>
+@endsection
