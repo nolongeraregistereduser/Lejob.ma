@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Notifications\ConsultantApproved;
 use Illuminate\Http\Request;
 
 class UserManagementController extends Controller
@@ -22,9 +21,7 @@ class UserManagementController extends Controller
       $user->status = 'active';
       $user->save();
       
-      // Send notification to the consultant
-      $user->notify(new ConsultantApproved());
-      
+          
       return redirect()->back()->with('success', 'Consultant approuvé avec succès. Un e-mail de notification a été envoyé.');
    }
 
