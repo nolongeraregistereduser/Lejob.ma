@@ -14,14 +14,12 @@ class ConsultantApproved extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user)
+    public function __construct(public User $user)
     {
-        $this->user = $user;
+        //
     }
 
     /**
@@ -30,7 +28,7 @@ class ConsultantApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre Compte Consultant est Maintenant Activé',
+            subject: 'Félicitations ! Votre compte consultant a été approuvé - LeJob.ma',
         );
     }
 
