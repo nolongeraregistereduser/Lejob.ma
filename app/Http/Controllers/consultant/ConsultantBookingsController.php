@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Consultant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
+use App\Mail\ReservationApproved;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class ConsultantBookingsController extends Controller
 {
@@ -56,20 +59,48 @@ class ConsultantBookingsController extends Controller
     }
     
     /**
-     * Accepter une réservation
+     * Afficher le formulaire d'acceptation avec les notes
      */
-    public function accept(Reservation $reservation)
+    public function showAcceptForm(Reservation $reservation)
     {
         if ($reservation->consultant_id !== Auth::id()) {
             return redirect()->route('consultant.bookings')
                 ->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
         }
         
+        return view('consultant.bookings.accept-form', compact('reservation'));
+    }
+    
+    /**
+     * Accepter une réservation avec des notes
+     */
+    public function accept(Request $request, Reservation $reservation)
+    {
+        if ($reservation->consultant_id !== Auth::id()) {
+            return redirect()->route('consultant.bookings')
+                ->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
+        }
+        
+        // Validate the request
+        $request->validate([
+            'notes' => 'required|string|max:1000',
+        ]);
+        
+        // Update reservation status and notes
         $reservation->status = 'confirmed';
+        $reservation->notes = $request->notes;
         $reservation->save();
         
+        // Send email to the user
+        try {
+            Mail::to($reservation->user->email)->send(new ReservationApproved($reservation));
+            Log::info("Reservation approval email sent to: " . $reservation->user->email);
+        } catch (\Exception $e) {
+            Log::error("Failed to send reservation approval email: " . $e->getMessage());
+        }
+        
         return redirect()->route('consultant.bookings')
-            ->with('success', 'La réservation a été acceptée avec succès.');
+            ->with('success', 'La réservation a été acceptée avec succès et le client a été notifié par email.');
     }
     
     /**
