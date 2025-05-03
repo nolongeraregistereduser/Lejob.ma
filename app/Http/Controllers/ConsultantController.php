@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class ConsultantController extends Controller
 {
-    /**
-     * Affiche la liste des consultants avec leur feedback.
-     */
+
     public function index(Request $request)
     {
         $query = User::where('role', 'consultant');

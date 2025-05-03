@@ -9,18 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ConsultantProfileController extends Controller
 {
-    /**
-     * Display the consultant profile page.
-     */
     public function show()
     {
         $user = Auth::user();
         return view('consultant.profile', compact('user'));
     }
 
-    /**
-     * Update the consultant profile.
-     */
+
     public function update(Request $request)
     {
         $user = Auth::user();

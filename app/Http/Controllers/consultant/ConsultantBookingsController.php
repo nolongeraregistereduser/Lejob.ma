@@ -18,9 +18,7 @@ class ConsultantBookingsController extends Controller
         // $this->middleware('role:consultant');
     }
 
-    /**
-     * Afficher les réservations du consultant
-     */
+    
     public function index()
     {
         $pendingReservations = Reservation::with('user')
@@ -58,9 +56,7 @@ class ConsultantBookingsController extends Controller
         ));
     }
     
-    /**
-     * Afficher le formulaire d'acceptation avec les notes
-     */
+
     public function showAcceptForm(Reservation $reservation) 
     {
         // Check if the consultant owns this reservation
@@ -72,9 +68,7 @@ class ConsultantBookingsController extends Controller
         return view('consultant.bookings.accept-form', compact('reservation'));
     }
     
-    /**
-     * Accepter une réservation avec des notes
-     */
+
     public function accept(Request $request, Reservation $reservation)
     {
         // Check if the consultant owns this reservation
@@ -105,9 +99,7 @@ class ConsultantBookingsController extends Controller
             ->with('success', 'La réservation a été acceptée avec succès et le client a été notifié par email.');
     }
     
-    /**
-     * Rejeter une réservation
-     */
+  
     public function reject(Reservation $reservation)
     {
         if ($reservation->consultant_id !== Auth::id()) {
@@ -122,9 +114,7 @@ class ConsultantBookingsController extends Controller
             ->with('success', 'La réservation a été rejetée.');
     }
     
-    /**
-     * Marquer une réservation comme terminée
-     */
+
     public function complete(Reservation $reservation)
     {
         if ($reservation->consultant_id !== Auth::id()) {
