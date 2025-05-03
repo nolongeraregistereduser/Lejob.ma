@@ -22,8 +22,7 @@ class ConsultantProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $user = auth()->user();
-        
+        // Validate the request data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'title' => 'nullable|string|max:255',
@@ -37,22 +36,25 @@ class ConsultantProfileController extends Controller
             'hourly_rate' => 'nullable|numeric|min:0',
         ]);
         
-
-        // Handle profile picture upload
+        $user = auth()->user();
+        
         if ($request->hasFile('profile_picture')) {
-            // Delete old profile picture if exists
-            if ($user->profile_picture) {
+            // Delete old image if exists
+            if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
                 Storage::disk('public')->delete($user->profile_picture);
             }
             
-            // Store new profile picture
+            // Store new image
             $path = $request->file('profile_picture')->store('profile-pictures', 'public');
-            $validated['profile_picture'] = $path;
+            
+            // Update database with relative path
+            $user->profile_picture = $path;
         }
         
-        $user->hourly_rate = $request->hourly_rate;
-        $user->update($validated);
+        // Update other fields
+        $user->fill($validated);
+        $user->save();
         
-        return redirect()->route('consultant.profile')->with('success', 'Profil mis à jour avec succès');
+        return back()->with('success', 'Profile updated successfully');
     }
 }

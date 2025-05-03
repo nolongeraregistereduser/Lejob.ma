@@ -36,22 +36,29 @@
                     <div class="absolute bottom-0 left-0 w-full transform translate-y-1/2 flex justify-center">
                         <div class="relative">
                             <div class="w-32 h-32 rounded-full border-4 border-white bg-white overflow-hidden shadow-lg">
-                                @if($user->profile_picture)
-                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-700 text-4xl font-bold">
-                                        {{ substr($user->name ?? 'U', 0, 1) }}
-                                    </div>
-                                @endif
+                                <div class="profile-image-container">
+                                    @if($user->profile_picture)
+                                        <img src="{{ Storage::disk('public')->url($user->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full object-cover rounded-full">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center bg-blue-500 text-white rounded-full">
+                                            {{ strtoupper(substr($user->name, 0, 1)) }}
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <label for="profile_picture" class="absolute bottom-0 right-0 bg-blue-600 text-white rounded-full p-2 cursor-pointer shadow-md hover:bg-blue-700 transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
                                 </svg>
                             </label>
-                            <input id="profile_picture" type="file" name="profile_picture" class="hidden" />
+                            <input id="profile_picture" type="file" name="profile_picture" class="hidden" accept="image/*" />
                         </div>
                     </div>
+                </div>
+                
+                <!-- Add this temporarily for debugging -->
+                <div class="text-xs text-gray-500 mt-2">
+                    Debug: {{ $user->profile_picture ?? 'No image path' }}
                 </div>
                 
                 <!-- Form Content -->
