@@ -98,12 +98,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
                                     <div class="flex space-x-2">
-                                        <form action="{{ route('consultant.bookings.accept', $reservation->id) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700">
-                                                Accepter
-                                            </button>
-                                        </form>
+                                        <a href="{{ route('consultant.bookings.accept-form', $reservation->id) }}" class="text-green-600 hover:text-green-800">Confirmer avec instructions</a>
                                         <form action="{{ route('consultant.bookings.reject', $reservation->id) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">

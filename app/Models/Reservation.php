@@ -14,7 +14,8 @@ class Reservation extends Model
         'consultant_id', 
         'date', 
         'time_slot', 
-        'status'
+        'status',
+        'notes',
     ];
 
     // Relationship with user (Job seeker)

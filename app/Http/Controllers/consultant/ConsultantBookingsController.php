@@ -61,8 +61,9 @@ class ConsultantBookingsController extends Controller
     /**
      * Afficher le formulaire d'acceptation avec les notes
      */
-    public function showAcceptForm(Reservation $reservation)
+    public function showAcceptForm(Reservation $reservation) 
     {
+        // Check if the consultant owns this reservation
         if ($reservation->consultant_id !== Auth::id()) {
             return redirect()->route('consultant.bookings')
                 ->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
@@ -76,6 +77,7 @@ class ConsultantBookingsController extends Controller
      */
     public function accept(Request $request, Reservation $reservation)
     {
+        // Check if the consultant owns this reservation
         if ($reservation->consultant_id !== Auth::id()) {
             return redirect()->route('consultant.bookings')
                 ->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
@@ -93,7 +95,7 @@ class ConsultantBookingsController extends Controller
         
         // Send email to the user
         try {
-            Mail::to($reservation->user->email)->send(new ReservationApproved($reservation));
+            Mail::to($reservation->user->email)->send(new \App\Mail\ReservationApproved($reservation));
             Log::info("Reservation approval email sent to: " . $reservation->user->email);
         } catch (\Exception $e) {
             Log::error("Failed to send reservation approval email: " . $e->getMessage());

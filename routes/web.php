@@ -68,6 +68,7 @@ Route::middleware(['auth', 'role:consultant'])->prefix('consultant')->group(func
     Route::get('/availability', [App\Http\Controllers\Consultant\ConsultantDashboardController::class, 'availability'])->name('consultant.availability');
     
     Route::get('/bookings', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'index'])->name('consultant.bookings');
+    Route::get('/bookings/{reservation}/accept', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'showAcceptForm'])->name('consultant.bookings.accept-form');
     Route::post('/bookings/{reservation}/accept', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'accept'])->name('consultant.bookings.accept');
     Route::post('/bookings/{reservation}/reject', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'reject'])->name('consultant.bookings.reject');
     Route::post('/bookings/{reservation}/complete', [App\Http\Controllers\Consultant\ConsultantBookingsController::class, 'complete'])->name('consultant.bookings.complete');
