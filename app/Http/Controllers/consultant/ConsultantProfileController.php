@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Consultant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ConsultantProfileController extends Controller
 {
@@ -13,7 +14,7 @@ class ConsultantProfileController extends Controller
      */
     public function show()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         return view('consultant.profile', compact('user'));
     }
 
@@ -22,39 +23,45 @@ class ConsultantProfileController extends Controller
      */
     public function update(Request $request)
     {
-        // Validate the request data
-        $validated = $request->validate([
+        $user = Auth::user();
+        
+        // Validate the request
+        $request->validate([
             'name' => 'required|string|max:255',
             'title' => 'nullable|string|max:255',
-            'bio' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
             'whatsapp' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
             'country' => 'nullable|string|max:100',
-            'profile_picture' => 'nullable|image|max:2048',
+            'bio' => 'nullable|string',
             'hourly_rate' => 'nullable|numeric|min:0',
+            'profile_picture' => 'nullable|image|max:2048',
         ]);
-        
-        $user = auth()->user();
-        
+
+        // Update user information
+        $user->name = $request->name;
+        $user->title = $request->title;
+        $user->phone = $request->phone;
+        $user->whatsapp = $request->whatsapp;
+        $user->city = $request->city;
+        $user->country = $request->country;
+        $user->bio = $request->bio;
+        $user->hourly_rate = $request->hourly_rate;
+
+        // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
             // Delete old image if exists
-            if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
+            if ($user->profile_picture) {
                 Storage::disk('public')->delete($user->profile_picture);
             }
             
             // Store new image
-            $path = $request->file('profile_picture')->store('profile-pictures', 'public');
-            
-            // Update database with relative path
+            $path = $request->file('profile_picture')->store('profile_images', 'public');
             $user->profile_picture = $path;
         }
-        
-        // Update other fields
-        $user->fill($validated);
+
         $user->save();
-        
-        return back()->with('success', 'Profile updated successfully');
+
+        return redirect()->route('consultant.profile')->with('success', 'Profil mis à jour avec succès!');
     }
 }
