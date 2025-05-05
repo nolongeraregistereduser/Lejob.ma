@@ -4,7 +4,7 @@
     </div>
     <div class="flex gap-8 items-center">
         <a href="/" class="text-gray-800 hover:text-gray-600">Accueil</a>
-        <a href="/cv-builder" class="text-gray-800 hover:text-gray-600">CV Builder</a>
+        <a href="/cv/create/" class="text-gray-800 hover:text-gray-600">CV Builder</a>
         <a href="/jobs" class="text-gray-800 hover:text-gray-600">Offres</a>
         <a href="/consultants" class="text-gray-800 hover:text-gray-600">Nos Consultants</a>
         
