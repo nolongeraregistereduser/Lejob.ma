@@ -17,7 +17,11 @@
                 <button @click="open = !open" type="button" class="flex items-center space-x-2 focus:outline-none">
                     <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                         @if(auth()->user()->profile_picture)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="{{ auth()->user()->name }}" class="w-full h-full object-cover">
+                            @if(str_starts_with(auth()->user()->profile_picture, 'http'))
+                                <img src="{{ auth()->user()->profile_picture }}" alt="{{ auth()->user()->name }}" class="w-full h-full object-cover">
+                            @else
+                                <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="{{ auth()->user()->name }}" class="w-full h-full object-cover">
+                            @endif
                         @else
                             <div class="text-gray-500 text-lg font-semibold">{{ substr(auth()->user()->name ?? 'U', 0, 1) }}</div>
                         @endif

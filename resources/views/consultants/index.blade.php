@@ -67,9 +67,12 @@
                 <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full">
                     <!-- Consultant Header with Image -->
                     <div class="bg-gray-100 h-48 flex items-center justify-center">
-                        <!-- Placeholder for image - will be replaced later -->
                         @if($consultant->profile_picture)
-                            <img class="h-full w-full object-cover" src="{{ asset('storage/' . $consultant->profile_picture) }}" alt="{{ $consultant->name }}">
+                            @if(str_starts_with($consultant->profile_picture, 'http'))
+                                <img class="h-full w-full object-cover" src="{{ $consultant->profile_picture }}" alt="{{ $consultant->name }}">
+                            @else
+                                <img class="h-full w-full object-cover" src="{{ asset('storage/' . $consultant->profile_picture) }}" alt="{{ $consultant->name }}">
+                            @endif
                         @else
                             <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                                 <div class="h-20 w-20 rounded-full bg-blue-100 flex items-center justify-center">

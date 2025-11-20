@@ -30,9 +30,15 @@ class User extends Authenticatable
         'city',
         'country',
         'bio',
-        'title', // Make sure this is included
+        'title',
         'profile_picture',
         'available_for_hire',
+        'hourly_rate',
+        'portfolio',
+        'linkedin',
+        'github',
+        'twitter',
+        'website',
         'role',
         'status',
     ];

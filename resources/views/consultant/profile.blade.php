@@ -38,7 +38,11 @@
                             <div class="w-32 h-32 rounded-full border-4 border-white bg-white overflow-hidden shadow-lg">
                                 <div class="profile-image-container">
                                     @if($user->profile_picture)
-                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                        @if(str_starts_with($user->profile_picture, 'http'))
+                                            <img src="{{ $user->profile_picture }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                        @else
+                                            <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                        @endif
                                     @else
                                         <div class="w-full h-full flex items-center justify-center bg-blue-500 text-white rounded-full">
                                             {{ strtoupper(substr($user->name, 0, 1)) }}

@@ -51,9 +51,15 @@
                         <!-- Profile image -->
                         @if($consultant->profile_picture)
                             <div class="relative mx-auto mb-6">
-                                <img src="{{ asset('storage/' . $consultant->profile_picture) }}" 
-                                     alt="{{ $consultant->name }}" 
-                                     class="h-36 w-36 rounded-full object-cover border-4 border-white shadow-sm mx-auto">
+                                @if(str_starts_with($consultant->profile_picture, 'http'))
+                                    <img src="{{ $consultant->profile_picture }}" 
+                                         alt="{{ $consultant->name }}" 
+                                         class="h-36 w-36 rounded-full object-cover border-4 border-white shadow-sm mx-auto">
+                                @else
+                                    <img src="{{ asset('storage/' . $consultant->profile_picture) }}" 
+                                         alt="{{ $consultant->name }}" 
+                                         class="h-36 w-36 rounded-full object-cover border-4 border-white shadow-sm mx-auto">
+                                @endif
                                 <div class="absolute bottom-0 right-2 bg-green-500 p-1 rounded-full text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />

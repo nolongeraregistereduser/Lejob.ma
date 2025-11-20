@@ -251,7 +251,11 @@
                         <div class="relative mb-3">
                             <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                                 @if(isset($user->profile_picture))
-                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                    @if(str_starts_with($user->profile_picture, 'http'))
+                                        <img src="{{ $user->profile_picture }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                    @endif
                                 @else
                                     <div class="text-gray-400 text-4xl">{{ substr($user->name ?? 'User', 0, 1) }}</div>
                                 @endif
